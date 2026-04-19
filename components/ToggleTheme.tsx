@@ -1,0 +1,135 @@
+'use client'
+
+import { useState, useEffect, useMemo } from "react"
+import { m, useMotionValue, animate } from "framer-motion"
+import { interpolate } from "flubber"
+import { useTheme } from "@/context/ThemeProvider"
+
+const RAYS: { x1: number; y1: number; x2: number; y2: number; hide: string }[] = [
+    { x1: 19, y1: 3, x2: 19, y2: 10, hide: "opacity-0 -translate-y-1.5" },
+    { x1: 19, y1: 28, x2: 19, y2: 35, hide: "opacity-0 translate-y-1.5" },
+    { x1: 6, y1: 11.5, x2: 11, y2: 14, hide: "opacity-0 -translate-x-1.5 -translate-y-1" },
+    { x1: 27, y1: 24, x2: 32, y2: 26.5, hide: "opacity-0 translate-x-1.5 translate-y-1" },
+    { x1: 6, y1: 26.5, x2: 11, y2: 24, hide: "opacity-0 -translate-x-1.5 translate-y-1" },
+    { x1: 27, y1: 14, x2: 32, y2: 11.5, hide: "opacity-0 translate-x-1.5 -translate-y-1" },
+]
+
+// Moon path with translate(7, 7) baked into absolute coordinates
+const MOON_PATH = "M28.752 22.002A9.72 9.72 0 0 1 25 22.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 10 18.25C10 23.635 14.365 28 19.75 28a9.753 9.753 0 0 0 9.002-5.998Z"
+// Circle params for flubber.toCircle (centered in 38x38 SVG)
+const CIRCLE_CENTER_X = 19;
+const CIRCLE_CENTER_Y = 19;
+const CIRCLE_RADIUS = 9;
+
+const ToggleTheme = ({ styles = "" }: { styles?: string }) => {
+    const { theme, setTheme } = useTheme()
+    const isDark = theme === "dark"
+    const progress = useMotionValue(isDark ? 1 : 0)
+    const [pathD, setPathD] = useState(MOON_PATH)
+
+    useEffect(() => {
+        progress.set(isDark ? 1 : 0)
+    }, [isDark, progress])
+
+    // Memoize morph interpolators for performance
+    const [moonToCircle, circleToMoon] = useMemo(() => {
+        const toCirclePath = (moonPath: string, x: number, y: number, r: number) =>
+            require("flubber").toCircle(moonPath, x, y, r)(1);
+        const circlePath = toCirclePath(MOON_PATH, CIRCLE_CENTER_X, CIRCLE_CENTER_Y, CIRCLE_RADIUS);
+        return [
+            interpolate(MOON_PATH, circlePath, { maxSegmentLength: 1.5 }),
+            interpolate(circlePath, MOON_PATH, { maxSegmentLength: 1.5 }),
+        ];
+    }, []);
+
+    // Morphing effect
+    useEffect(() => {
+        return progress.on("change", (t: number) => {
+            if (!isDark) {
+                setPathD(circleToMoon(1 - t));
+            } else {
+                setPathD(moonToCircle(t));
+            }
+        });
+    }, [progress, isDark, moonToCircle, circleToMoon]);
+
+    const handleToggle = () => {
+        const next = isDark ? "light" : "dark"
+        setTheme(next)
+        animate(progress, next === "dark" ? 1 : 0, {
+            duration: 0.5,
+            ease: [0.4, 0, 0.2, 1],
+        })
+    }
+
+    // Keyboard shortcut: T for toggle
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            // Hindari trigger saat user lagi ngetik di input/textarea
+            const target = e.target as HTMLElement
+            const isTyping =
+                target.tagName === "INPUT" ||
+                target.tagName === "TEXTAREA" ||
+                target.isContentEditable
+
+            if (isTyping) return
+
+            if (e.key.toLowerCase() === "t") {
+                e.preventDefault()
+                handleToggle()
+            }
+        }
+
+        window.addEventListener("keydown", handleKeyDown)
+        return () => window.removeEventListener("keydown", handleKeyDown)
+    }, [handleToggle])
+
+    // Accessibility
+    const ariaLabel = isDark ? "Switch to light mode" : "Switch to dark mode";
+
+    return (
+        <button
+            onClick={handleToggle}
+            className={`group w-10 h-10 flex items-center justify-center cursor-pointer ${styles}`}
+            aria-label={ariaLabel}
+            aria-pressed={!isDark}
+            role="switch"
+            tabIndex={0}
+        >
+            <svg
+                className="z-10"
+                aria-hidden="true"
+                width="38" height="38" viewBox="0 0 38 38"
+                fill="none"
+            >
+                {/* Morphing path: crescent moon → full circle */}
+                <m.path
+                    d={pathD}
+                    fill="none"
+                    stroke="var(--gray)"
+                    strokeWidth="1"
+                    strokeLinejoin="round"
+                    vectorEffect="non-scaling-stroke"
+                    animate={isDark ? { scale: 0.6 } : { scale: 1 }}
+                    style={{ originX: 0.5, originY: 0.5 }}
+                />
+
+                {/* Sun rays */}
+                <g stroke="var(--gray)" strokeWidth="1" strokeLinecap="round">
+                    {RAYS.map(({ x1, y1, x2, y2, hide }, i) => (
+                        <line key={i} x1={x1} y1={y1} x2={x2} y2={y2}
+                            className={`transition-all duration-500 ${isDark ? "opacity-100 translate-x-0 translate-y-0 delay-400" : hide}`} />
+                    ))}
+                </g>
+            </svg>
+            <span className="absolute top-full -mt-1 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                <p className="text-[10px] text-(--gray) text-center">{isDark ? "Switch to Light " : "Switch to Dark"}
+                    <br />
+                    <span>(T)</span>
+                </p>
+            </span>
+        </button>
+    )
+}
+
+export default ToggleTheme

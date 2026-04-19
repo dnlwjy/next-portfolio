@@ -1,65 +1,91 @@
-import Image from "next/image";
+import Ava from '../components/Ava'
+import MotionDiv from '../components/MotionDiv'
+import LinkButton from '../components/LinkButton'
+import CaseStudySection from '../components/CaseStudySection'
+import AboutImage from '../components/AboutImage'
 
 export default function Home() {
+  console.log("─── HOME ──────────────────────────────────────────────────────")
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main>
+
+      {/* Hero Section */}
+      <section id="hero" className="h-screen p-4">
+        <div className="max-h-225 flex flex-col flex-1 py-0 h-[85%] relative">
+
+          <Ava />
+
+          <MotionDiv
+            variant="up"
+            styles="flex flex-col gap-12 items-center z-10">
+            <h1 className="text-center">
+              <span className="text-(--gray)">I'm Daniel</span>
+              <br />
+              UX Engineer
+            </h1>
+            <div className="flex gap-6 items-center">
+              <LinkButton
+                title="Contact"
+                link="/contact"
+              />
+
+              <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" fill="none" viewBox="-1 -1 7 12"><path stroke="var(--gray)" strokeWidth=".5" d="M.826 9.949H0L3.318.05h.826z" /></svg>
+              <LinkButton
+                title="View CV"
+                link="https://drive.google.com/file/d/1g2-1tF6l2J3GOTJN6D0DE1R_SZnUv4wU/view"
+              />
+            </div>
+          </MotionDiv>
+        </div>
+      </section>
+
+      {/* Case Study Sections */}
+      <CaseStudySection
+        title="Increased Conversions 35% with Custom Analytics and A/B Testing"
+        description="jago pasang cookies untuk ngetrack button, links, behavior lainnya, jago pasang GA 4, Jago a b testing pakai data"
+        link="#"
+        darkVideo="/casestudy-1-b.mp4"
+        lightVideo="/casestudy-1-w.mp4"
+      />
+      <CaseStudySection
+        variant="type B"
+        title="Increased Conversions 35% with Custom Analytics and A/B Testing"
+        description="jago pasang cookies untuk ngetrack button, links, behavior lainnya, jago pasang GA 4, Jago a b testing pakai data"
+        link="#"
+        darkVideo="/casestudy-2-b.webm"
+        lightVideo="/casestudy-2-w.webm"
+      />
+      <CaseStudySection
+        title="Increased Conversions 35% with Custom Analytics and A/B Testing"
+        description="jago pasang cookies untuk ngetrack button, links, behavior lainnya, jago pasang GA 4, Jago a b testing pakai data"
+        link="#"
+        darkVideo="/casestudy-1-b.mp4"
+        lightVideo="/casestudy-1-w.mp4"
+      />
+
+      {/* About me */}
+      <section className="flex-wrap max-w-480 items-start">
+        <MotionDiv styles="relative flex-1 aspect-3/4 min-w-90 max-w-170">
+          <AboutImage />
+          <div className="absolute z-10 inset-0 bg-[radial-gradient(farthest-side_at_center,#12121200_90%,var(--black)_100%)]" />
+          <svg
+            className="absolute w-full aspect-square -bottom-16 z-20"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 524 524">
+            <path stroke="var(--divider)" d="M0 524 524 0M183.704 373l196-196" />
+          </svg>
+        </MotionDiv>
+
+        <MotionDiv
+          variant='right'
+          del={0.5}
+          styles="flex-1 min-w-90 mt-10 max-w-170">
+          <p>
+            With a mixed background in design and coding, I have a solid foundation to make a step up as a UX Engineer. I'm responsible in building design systems, advocating user experience, and ensuring scalable business. I'm highly data-driven, I use tracking tools to analyze user behavior and collect non-sensitive data. I rely heavily on data to understand how people actually behave, not just how we think they do. My role has always been about connecting the dots: between developers, users, and business, I'm the bridge.<br /><br />
+            If you’re interested in the software and hardware I use, you may check out my uses page. Meanwhile, you can also explore my other passion in music composing piano music. I'm an ex Dota 2 addict, if ever also played Dota 2 you might want to find a hidden easter egg in this website that only Dota players will recognize. Let’s find that easter egg.<br /><br />
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+        </MotionDiv>
+      </section>
+    </main>
   );
 }

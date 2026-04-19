@@ -1,26 +1,92 @@
 @import "tailwindcss";
 
+@theme {
+  --breakpoint-sm: 680px;
+  --breakpoint-md: 1080px;
+  --breakpoint-lg: 1920px;
+}
+
+/* fonts declaration  */
+@font-face{
+  font-family: "playfair";
+  src: url("/fonts/PlayfairDisplay-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "inter";
+  src: url("/fonts/Inter_18pt-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* colors */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --black: #121212;
+  --divider: #444444;
+  --gray: #8E8E8E;
+  --bodytext: #BDBDBD;
+  --white: #FFFFFF;
+  --blue: #1F99FD;
+  /* DELETE BLUE LATER !!!!!!!!!!!!!!!!!!! */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.light {
+  --black: #EEEEEE;
+  --divider: #CCCCCC;
+  --gray: #8E8E8E;
+  --bodytext: #606060;
+  --white: #121212;
+  --blue: #1F99FD;
+  /* DELETE BLUE LATER !!!!!!!!!!!!!!!!!!! */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* semantic styling */
+@layer base {
+::selection {
+    background-color: var(--white);
+    color: var(--black);
   }
+  ::-moz-selection {
+    background-color: var(--white);
+    color: var(--black);
+  }
+
+html {
+  @apply h-full antialiased;
+}
+body {
+  font-family: "inter", sans-serif;
+  @apply bg-(--black) text-[18px] text-(--bodytext) min-h-full;
+}
+main {
+  @apply flex flex-col gap-0 items-center w-full overflow-clip;
+}
+section {
+  @apply flex px-5 py-16 sm:px-12 sm:py-32 md:p-32 gap-8 items-center justify-center w-full;
+}
+section.sm {
+  @apply flex-col pt-40 gap-16 max-w-400;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+h1, h2 {
+  font-family: "playfair", serif;
+  @apply text-start text-(--white) leading-[1.1];
+}
+h1 { @apply lg:text-[96px] sm:text-[72px] text-[48px]; }
+h2 { @apply sm:text-[32px] text-[24px]; }
+
+p, a { @apply leading-[160%] text-start text-(--bodytext); }
+p.tag { @apply uppercase sm:text-[12px] text-[11px] tracking-[0.15em] text-(--bodytext); }
+p.sm { @apply text-[16px]; }
+
+input, textarea {
+  @apply w-full bg-transparent border border-(--divider) px-4 py-3 text-(--white) placeholder:text-(--divider) focus:outline-none focus:border-(--white) transition-colors duration-300;
+}
+
+}
+
+@utility btn-text {
+  @apply uppercase text-[14px] tracking-[0.35em] text-(--white);
 }
