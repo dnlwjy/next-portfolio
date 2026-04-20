@@ -14,7 +14,7 @@ const AvaComponent = () => {
             transition={{ duration: 1, ease: [0.44, 0, 0.56, 1] }}
             className="aspect-3/4 h-[138%] relative">
             <video
-                src={theme === 'dark' ? '/hero-b.webm' : '/hero-w.webm'}
+                src={theme === 'dark' ? '/BACKUP-107.webm' : '/BACKUP-124.webm'}
                 autoPlay
                 loop
                 muted
