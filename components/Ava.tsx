@@ -14,13 +14,12 @@ const AvaComponent = () => {
             transition={{ duration: 1, ease: [0.44, 0, 0.56, 1] }}
             className="aspect-3/4 h-[138%] relative">
             <video
-                src={theme === 'dark' ? '/hero-dark.mp4' : '/hero-light.webm'}
+                src={theme === 'dark' ? '/hero-b.webm' : '/hero-w.webm'}
                 autoPlay
                 loop
                 muted
                 className="absolute top-0 inset-x-0 mx-auto w-full"
             />
-            <div className="absolute bottom-0 right-0 w-[46%] h-[13%] bg-(--black)" />
             <div className="absolute inset-0 bg-[radial-gradient(farthest-side_at_center,#12121200_90%,var(--black)_100%)]" />
         </m.div>
     );
