@@ -1,24 +1,37 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import MotionDiv from './MotionDiv'
 import LinkButton from './LinkButton'
-import { m, useScroll, useTransform, useSpring } from "framer-motion"
+import { m, useScroll, useTransform, useSpring, useInView } from "framer-motion"
 import { useTheme } from '@/context/ThemeProvider';
 
 interface CaseStudySectionProps {
     title: string;
     description: string;
     link: string;
-    darkVideo?: string;
-    lightVideo?: string;
+    darkVideo: string;
+    lightVideo: string;
     variant?: keyof typeof variantCaseStudySection;
 }
 
 const variantCaseStudySection = {
-    "type A": { item1: "order-2 sm:order-1", item2: "order-1 sm:order-2", direction: "left", shade: "inset-0" },
-    "type B": { item1: "order-2", item2: "order-1", direction: "right", shade: "aspect-square h-full inset-x-0 mx-auto" },
+    "type A": {
+        item1: "order-2 sm:order-1",
+        item2: "order-1 sm:order-2",
+        direction: "left",
+        shade: "inset-0"
+    },
+    "type B": {
+        item1: "order-2",
+        item2: "order-1",
+        direction: "right",
+        shade: "aspect-square h-full inset-x-0 mx-auto"
+    },
 } as const
+
+const A = "absolute inset-x-0 h-12"
+const B = "absolute inset-y-0 w-24"
 
 const CaseStudySection = ({
     title,
@@ -30,6 +43,18 @@ const CaseStudySection = ({
 }: CaseStudySectionProps) => {
     const { theme } = useTheme();
     const sectionRef = useRef<HTMLDivElement>(null)
+    const videoRef = useRef<HTMLVideoElement>(null)
+    const visible = useInView(videoRef, { amount: 0 })
+
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+        if (visible) {
+            video.play().catch(() => {});
+        } else {
+            video.pause();
+        }
+    }, [visible, theme]);
 
     const { scrollYProgress } = useScroll({
         target: sectionRef,
@@ -38,14 +63,12 @@ const CaseStudySection = ({
 
     const springConfig = { stiffness: 132, damping: 60 }
 
-    // Single progress untuk entry & exit: 0→1→0
     const opacity = useSpring(useTransform(
         scrollYProgress,
         [0, 0.5, 1],
         [0, 1, 0]
     ), springConfig)
 
-    // Y movement: 128px→0px→0px (rise saat masuk, tetap saat exit)
     const y = useSpring(useTransform(
         scrollYProgress,
         [0, 0.5, 1],
@@ -74,10 +97,16 @@ const CaseStudySection = ({
             >
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 aspect-video w-[175%]">
                     <video
-                        src={theme === 'dark' ? darkVideo : lightVideo} autoPlay loop muted
+                        ref={videoRef}
+                        src={theme === 'dark' ? darkVideo : lightVideo} loop muted playsInline preload="metadata"
                         className="absolute inset-0 mx-auto h-full"
                     />
-                    <div className={`absolute ${variantCaseStudySection[variant].shade} bg-[radial-gradient(farthest-side_at_center,#12121200_95%,var(--black)_100%)]`} />
+                    <div className={`absolute ${variantCaseStudySection[variant].shade}`}>
+                        <div className={`${A} top-0 bg-[linear-gradient(to_bottom,var(--black),transparent)]`} />
+                        <div className={`${B} left-0 bg-[linear-gradient(to_right,var(--black),transparent)]`} />
+                        <div className={`${B} right-0 bg-[linear-gradient(to_left,var(--black),transparent)]`} />
+                        <div className={`${A} bottom-0 bg-[linear-gradient(to_top,var(--black),transparent)]`} />
+                    </div>
                 </div>
             </m.div>
 

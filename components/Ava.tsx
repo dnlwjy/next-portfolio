@@ -18,9 +18,10 @@ const AvaComponent = () => {
                 autoPlay
                 loop
                 muted
+                playsInline
                 className="absolute top-0 inset-x-0 mx-auto w-full"
             />
-            <div className="absolute inset-0 bg-[radial-gradient(farthest-side_at_center,#12121200_90%,var(--black)_100%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(farthest-side_at_center,transparent_90%,var(--black)_100%)]" />
         </m.div>
     );
 }

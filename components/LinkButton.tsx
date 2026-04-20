@@ -19,7 +19,7 @@ const LinkButton = ({
         <>
             {title}
             <span
-                className="absolute inset-y-0 my-auto h-px bg-(--gray) group-hover:left-0 group-hover:w-full right-0 w-0 transition-all duration-400 ease-in-out"
+                className="absolute inset-y-0 my-auto h-px bg-(--gray) group-hover:left-0 group-hover:w-full right-0 w-0 transition-all duration-500 ease-in-out"
             />
         </>
     )

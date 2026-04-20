@@ -44,8 +44,8 @@ export default function Home() {
         title="Increased Conversions 35% with Custom Analytics and A/B Testing"
         description="jago pasang cookies untuk ngetrack button, links, behavior lainnya, jago pasang GA 4, Jago a b testing pakai data"
         link="#"
-        darkVideo="/casestudy-1-b.mp4"
-        lightVideo="/casestudy-1-w.mp4"
+        darkVideo="/casestudy-1-b.webm"
+        lightVideo="/casestudy-1-w.webm"
       />
       <CaseStudySection
         variant="type B"
@@ -59,8 +59,8 @@ export default function Home() {
         title="Increased Conversions 35% with Custom Analytics and A/B Testing"
         description="jago pasang cookies untuk ngetrack button, links, behavior lainnya, jago pasang GA 4, Jago a b testing pakai data"
         link="#"
-        darkVideo="/casestudy-1-b.mp4"
-        lightVideo="/casestudy-1-w.mp4"
+        darkVideo="/casestudy-1-b.webm"
+        lightVideo="/casestudy-1-w.webm"
       />
 
       {/* About me */}

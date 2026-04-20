@@ -15,7 +15,7 @@ const AboutImage = () => {
             fill
             placeholder="blur"
             sizes="(max-width: 680px) 100vw, 680px"
-            className="z-0 object-cover"
+            className="object-cover"
         />
     )
 }
