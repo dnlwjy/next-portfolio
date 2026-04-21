@@ -21,7 +21,7 @@ export default function Home() {
             <h1 className="text-center">
               <span className="text-(--gray)">I'm Daniel</span>
               <br />
-              UX Engineer
+              UX Engineer (dev)
             </h1>
             <div className="flex gap-6 items-center">
               <LinkButton
