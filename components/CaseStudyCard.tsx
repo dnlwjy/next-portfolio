@@ -27,6 +27,7 @@ export const CaseStudyCard = ({
             alt={title}
             width={400}
             height={300}
+            unoptimized
             className="md:h-full md:w-80 w-full object-cover border border-(--divider)"
         />
 
