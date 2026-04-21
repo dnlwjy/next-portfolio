@@ -19,6 +19,7 @@ const AvaComponent = () => {
                 loop
                 muted
                 playsInline
+                preload="auto"
                 className="absolute top-0 inset-x-0 mx-auto w-full"
             />
             <div className="absolute inset-0 bg-[radial-gradient(farthest-side_at_center,transparent_90%,var(--black)_100%)]" />
@@ -29,7 +30,6 @@ const AvaComponent = () => {
 const FollowVideo = withCursorFollow(AvaComponent);
 
 const Ava = () => {
-    console.log("COMP: Ava")
     return (
     <div className="flex flex-1 items-start justify-center z-0">
         <div className="aspect-3/4 h-[138%] relative">

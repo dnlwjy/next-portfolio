@@ -21,7 +21,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log("layout: MAIN");
   const cookieStore = await cookies()
   const cookieTheme = cookieStore.get("theme")?.value
   const initialTheme: "dark" | "light" = cookieTheme === "light" ? "light" : "dark"

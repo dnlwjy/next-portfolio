@@ -4,7 +4,11 @@ import { groq } from 'next-sanity'
 import { CaseStudyCardProps } from '../../components/CaseStudyCard'
 import CaseStudyCard from '../../components/CaseStudyCard'
 
+// Pre-render halaman ini saat `npm run build` — navigasi dari Home akan instan
+export const dynamic = 'force-static'
+
 const query = groq`*[_type == "projects"]{
+    _id,
     title,
     description,
     tags,
@@ -35,7 +39,7 @@ export default async function CaseStudy() {
                     del={0.5}
                     styles="flex flex-col gap-4 w-full">
                     {caseStudies.map((e) => (
-                        <CaseStudyCard key={e.title} {...e} />
+                        <CaseStudyCard key={e._id} {...e} />
                     ))}
                 </MotionDiv>
             </section>

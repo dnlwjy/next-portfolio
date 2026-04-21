@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react"
 import { m, useMotionValue, animate } from "framer-motion"
-import { interpolate } from "flubber"
+import { interpolate, toCircle } from "flubber"
 import { useTheme } from "@/context/ThemeProvider"
 
 const RAYS: { x1: number; y1: number; x2: number; y2: number; hide: string }[] = [
@@ -20,12 +20,13 @@ const MOON_PATH = "M28.752 22.002A9.72 9.72 0 0 1 25 22.75c-5.385 0-9.75-4.365-9
 const CIRCLE_CENTER_X = 19;
 const CIRCLE_CENTER_Y = 19;
 const CIRCLE_RADIUS = 9;
+const CIRCLE_PATH: string = toCircle(MOON_PATH, CIRCLE_CENTER_X, CIRCLE_CENTER_Y, CIRCLE_RADIUS)(1);
 
 const ToggleTheme = ({ styles = "" }: { styles?: string }) => {
     const { theme, setTheme } = useTheme()
     const isDark = theme === "dark"
     const progress = useMotionValue(isDark ? 1 : 0)
-    const [pathD, setPathD] = useState(MOON_PATH)
+    const [pathD, setPathD] = useState(() => isDark ? CIRCLE_PATH : MOON_PATH)
 
     useEffect(() => {
         progress.set(isDark ? 1 : 0)
@@ -33,12 +34,9 @@ const ToggleTheme = ({ styles = "" }: { styles?: string }) => {
 
     // Memoize morph interpolators for performance
     const [moonToCircle, circleToMoon] = useMemo(() => {
-        const toCirclePath = (moonPath: string, x: number, y: number, r: number) =>
-            require("flubber").toCircle(moonPath, x, y, r)(1);
-        const circlePath = toCirclePath(MOON_PATH, CIRCLE_CENTER_X, CIRCLE_CENTER_Y, CIRCLE_RADIUS);
         return [
-            interpolate(MOON_PATH, circlePath, { maxSegmentLength: 1.5 }),
-            interpolate(circlePath, MOON_PATH, { maxSegmentLength: 1.5 }),
+            interpolate(MOON_PATH, CIRCLE_PATH, { maxSegmentLength: 1.5 }),
+            interpolate(CIRCLE_PATH, MOON_PATH, { maxSegmentLength: 1.5 }),
         ];
     }, []);
 

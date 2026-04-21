@@ -4,6 +4,7 @@ import Image from 'next/image'
 import MotionDiv from './MotionDiv'
 
 export interface CaseStudyCardProps {
+    _id: string
     title: string
     description: string
     tags: string[]
@@ -13,6 +14,7 @@ export interface CaseStudyCardProps {
 }
 
 export const CaseStudyCard = ({
+    _id,
     title,
     description,
     tags,
@@ -20,7 +22,7 @@ export const CaseStudyCard = ({
     link,
     coverImage
 }: CaseStudyCardProps) => (
-    <MotionDiv variant="up" styles="flex flex-col md:flex-row gap-8 p-8 sm:p-12 border border-(--divider)">
+    <MotionDiv key={_id} variant="up" styles="flex flex-col md:flex-row gap-8 p-8 sm:p-12 border border-(--divider)">
 
         <Image
             src={coverImage}

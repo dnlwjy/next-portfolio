@@ -1,30 +1,32 @@
 import ShopCard from "@/components/ShopCard"
 import Tag from '@/components/Tag'
 import MotionDiv from "@/components/MotionDiv";
-import { withAutoIds } from "@/lib/slugify";
 import SearchInput from "@/components/SearchInput";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
+import { groq } from "next-sanity";
 
-interface ShopItemProps {
-    id: string
-    image: string
-    link: string
+// Pre-render halaman ini saat `npm run build` — navigasi dari Home akan instan
+export const dynamic = 'force-static'
+
+interface SanityShopItem {
+    _id: string
     title: string
-    price: number | string
+    slug: { current: string }
+    coverImage: object
+    price: number
 }
 
-const shopItemsData = [
-    { image: "/1.png", link: "/shop/xxx", title: "Esteem — Sport Car Dealership Template Esteem — Sport Car Dealership Template", price: "0" as const },
-    { image: "/1.png", link: "/shop/xxx", title: "Esteem — Sport Car Dealership Template", price: 24 },
-    { image: "/1.png", link: "/shop/xxx", title: "Esteem — Sport Car Dealership Template", price: 24 },
-    { image: "/1.png", link: "/shop/xxx", title: "Esteem — Sport Car Dealership Template", price: 24 },
-    { image: "/1.png", link: "/shop/xxx", title: "Esteem — Sport Car Dealership Template", price: 24 },
-    { image: "/1.png", link: "/shop/xxx", title: "Esteem — Sport Car Dealership Template", price: 24 },
-]
+const query = groq`*[_type == "shop"] | order(orderRank asc) {
+    _id,
+    title,
+    slug,
+    coverImage,
+    price
+}`
 
-const shopItems: ShopItemProps[] = withAutoIds(shopItemsData)
-
-export default function Shop() {
-    console.log("─── page: SHOP ──────────────────────────────────────────────────────");
+export default async function Shop() {
+    const items: SanityShopItem[] = await client.fetch(query)
     return (
         <main>
             <section className="flex-col pt-40 gap-16">
@@ -50,8 +52,14 @@ export default function Shop() {
                 <MotionDiv variant="up" del={0.7} styles="flex flex-col flex-1 gap-2">
                     <SearchInput />
                     <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-                        {shopItems.map((item) => (
-                            <ShopCard key={item.id} {...item} />
+                        {items.map((item) => (
+                            <ShopCard
+                                key={item._id}
+                                title={item.title}
+                                image={urlFor(item.coverImage).width(600).url()}
+                                link={`/shop/${item.slug.current}`}
+                                price={item.price}
+                            />
                         ))}
                     </div>
                 </MotionDiv>

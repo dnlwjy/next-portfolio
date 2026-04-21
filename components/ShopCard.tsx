@@ -34,7 +34,6 @@ const ShopCard = ({
     price,
     styles = ""
 }: ShopCardProps) => {
-    console.log("COMP: ShopCard")
     const [hovered, setHovered] = useState(false)
 
     return (

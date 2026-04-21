@@ -22,8 +22,6 @@ const MotionDiv = ({
     del = 0.3,
     styles
 }: MotionDivProps) => {
-    console.log("COMP: MotionDiv")
-
     return (
         <m.div
             initial={{ opacity: 0, ...variantMotionDiv[variant] }}

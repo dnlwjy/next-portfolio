@@ -98,7 +98,7 @@ const CaseStudySection = ({
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 aspect-video w-[175%]">
                     <video
                         ref={videoRef}
-                        src={theme === 'dark' ? darkVideo : lightVideo} loop muted playsInline preload="metadata"
+                        src={theme === 'dark' ? darkVideo : lightVideo} loop muted playsInline preload="none"
                         className="absolute inset-0 mx-auto h-full"
                     />
                     <div className={`absolute ${variantCaseStudySection[variant].shade}`}>

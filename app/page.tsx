@@ -5,7 +5,6 @@ import CaseStudySection from '../components/CaseStudySection'
 import AboutImage from '../components/AboutImage'
 
 export default function Home() {
-  console.log("─── HOME ──────────────────────────────────────────────────────")
   return (
     <main>
 

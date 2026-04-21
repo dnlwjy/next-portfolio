@@ -11,7 +11,6 @@ const LinkButton = ({
     link,
     styles = "",
 }: LinkButtonProps) => {
-    console.log("COMP: LinkButton")
     const wrapperStyles = `btn-text group relative hover:text-(--gray) w-fit transition-colors duration-300 ${styles}`
 
     // JSX CONTENT

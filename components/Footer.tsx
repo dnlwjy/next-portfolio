@@ -14,7 +14,6 @@ const socialMedia = [
 const Footer = ({
     styles = "",
 }: FooterProps) => {
-    console.log("COMP: Footer")
     return (
         <footer className={`flex flex-col gap-16 py-16 px-5 w-full items-center ${styles}`}>
             
