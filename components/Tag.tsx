@@ -1,50 +1,47 @@
-'use client'
-
-import { useState } from 'react'
-
 interface TagProps {
-    title?: string;
+    title: string;
+    variant?: keyof typeof variantTag;
+    click?: () => void;
     styles?: string;
-    // click?: () => void;
-    clickable?: boolean;
 }
 
-const baseTag = `border border-(--divider) px-3 py-1`
-
+const baseTag = "border border-(--divider) text-(--bodytext) px-3 py-1 list-none"
 const variantTag = {
-    "default": "text-(--gray) hover:bg-(--divider)",
-    "active": "text-(--black) bg-(--white)"
+    "static": "",
+    "default": "cursor-pointer hover:border-(--gray) transition-colors duration-300",
+    "active": "border-(--white)! text-(--white)!"
 }
 
 const Tag = ({
     title,
-    styles = "",
-    // click,
-    clickable = false,
-}: TagProps) => {
-    const [isActive, setIsActive] = useState(false);
 
-    if (!clickable) {
+    variant = "static",
+    click,
+    styles = "",
+}: TagProps) => {
+
+    if (click) {
         return (
-            <li className={`text-(--gray) ${baseTag} ${styles}`}>
-                {title}
+            <li>
+                <button
+                    onClick={click}
+                    aria-label={title}
+                    aria-pressed={variant === "active" ? true : undefined}
+                    className={`${baseTag} ${variantTag[variant]} ${styles}`}
+                >
+                    {title}
+                </button>
             </li>
-        );
+        )
     }
 
     return (
         <li
-            onClick={() => setIsActive(!isActive)}
-            aria-label={title}
-            aria-pressed={isActive}
-            aria-disabled={!clickable}
-            className={`cursor-pointer transition-colors duration-300
-                ${isActive ? variantTag["active"] : variantTag["default"]} ${baseTag} ${styles}`}
+            className={`${baseTag} ${variantTag[variant]} ${styles}`}
         >
             {title}
         </li>
     )
-
-};
+}
 
 export default Tag;

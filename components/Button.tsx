@@ -5,8 +5,9 @@ import { useState } from 'react'
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     title: string,
     variant?: keyof typeof variantButton;
-    // for submit button in ContactForm, to keep the hover effect active while sending or after success
+    // for submit button in ContactForm, to keep the hover effect on hold while sending or after success
     additionalHoverLogic?: boolean;
+    click?: () => void;
     styles?: string,
 }
 
@@ -15,20 +16,22 @@ const variantButton = {
         base: "bg-(--white)",
         hover: "bg-(--divider)"},
     "secondary": {
-        base: "bg-(--divider)",
-        hover: "bg-(--white)"},
+        base: "bg-(--black)",
+        hover: "bg-(--divider)"},
 }
 
 const Button = ({
     title,
     variant = "primary",
     additionalHoverLogic,
-    styles
+    styles,
+    click
 }: ButtonProps) => {
     const [buttonHover, setButtonHover] = useState(false)
 
     return (
         <button
+            onClick={click}
             onMouseEnter={() => setButtonHover(true)}
             onMouseLeave={() => setButtonHover(false)}
             className={`

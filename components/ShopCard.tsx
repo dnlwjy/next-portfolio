@@ -4,27 +4,14 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { m } from 'framer-motion'
+import { pricingLogic } from '../lib/pricingLogic'
 
 interface ShopCardProps {
-    title: string;
-    image: string;
-    link: string;
-    price: number | string;
+    title: any;
+    image: any;
+    link: any;
+    price: any;
     styles?: string
-}
-
-function pricingLogic(a: any) {
-    if (typeof a === "number") {
-            if (a > 0) return `$${a}`
-            if (a === 0 ) return "FREE"
-            if (a < 0 ) throw new Error('gaboleh mines')
-    }
-    if (typeof a === "string") {
-        if (a.toLowerCase() === "free") return "FREE"
-        if (a === "0") return "FREE"
-    }
-    // fallback
-    throw new Error('isi yang bener woy');
 }
 
 const ShopCard = ({
@@ -52,7 +39,8 @@ const ShopCard = ({
                     src={image}
                     alt={title}
                     fill
-                    sizes="70vw"
+                    // let urlFor handle the optimization
+                    unoptimized
                     className="object-contain"
                 />
             </m.div>

@@ -1,31 +1,29 @@
 import MotionDiv from '../../components/MotionDiv'
 import { client } from '../../sanity/lib/client'
 import { groq } from 'next-sanity'
-import { CaseStudyCardProps } from '../../components/CaseStudyCard'
 import CaseStudyCard from '../../components/CaseStudyCard'
+import { urlFor } from '../../sanity/lib/image'
 
-// Pre-render halaman ini saat `npm run build` — navigasi dari Home akan instan
-export const dynamic = 'force-static'
+// // Pre-render halaman ini saat `npm run build` — navigasi dari Home akan instan
+// export const dynamic = 'force-static'
 
-const query = groq`*[_type == "projects"]{
+const query = groq`*[_type == "projects"] | order(orderRank asc) {
     _id,
+    coverImage,
     title,
     description,
     tags,
     year,
-    "coverImage": coverImage.asset->url,
-    "link": "/case-study/" + slug.current
+    slug,
 }`
 
-async function getCaseStudies(): Promise<CaseStudyCardProps[]> {
-  return client.fetch(query)
-}
-
 export default async function CaseStudy() {
-    const caseStudies = await getCaseStudies()
+    const caseStudies = await client.fetch(query)
+
     return (
         <main>
             <section className="sm">
+                
                 <MotionDiv
                     variant="up"
                     styles="flex flex-col gap-6 items-center text-center w-full"
@@ -38,10 +36,19 @@ export default async function CaseStudy() {
                     variant="up"
                     del={0.5}
                     styles="flex flex-col gap-4 w-full">
-                    {caseStudies.map((e) => (
-                        <CaseStudyCard key={e._id} {...e} />
+                    {caseStudies.map((e: any) => (
+                        <CaseStudyCard
+                            key={e._id}
+                            image={urlFor(e.coverImage).width(360).format('webp').url()}
+                            title={e.title}
+                            desc={e.description}
+                            tags={e.tags}
+                            year={e.year}
+                            link={`/case-study/${e.slug.current}`}
+                        />
                     ))}
                 </MotionDiv>
+
             </section>
         </main>
     )

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useLayoutEffect } from "react"
+import { withScrollLock } from "@/lib/withScrollLock"
 
 const LoadingScreen = ({ children }: { children: React.ReactNode }) => {
     // Selalu mulai false agar match dengan server-rendered HTML (tidak hydration error)
@@ -12,6 +13,8 @@ const LoadingScreen = ({ children }: { children: React.ReactNode }) => {
             setReady(true)
         }
     }, [])
+
+    withScrollLock(!ready)
 
     useEffect(() => {
         // Jika useLayoutEffect sudah set ready (returning user), skip

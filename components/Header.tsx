@@ -1,7 +1,7 @@
 'use client'
 
 import { m } from 'framer-motion'
-import { Home, CaseStudy, Shop, Contact } from '../components/IconLibrary'
+import { Home, CaseStudy, Shop, Contact } from './IconLibrary'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect } from 'react'

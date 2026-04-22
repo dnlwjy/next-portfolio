@@ -3,8 +3,19 @@ import MotionDiv from '../components/MotionDiv'
 import LinkButton from '../components/LinkButton'
 import CaseStudySection from '../components/CaseStudySection'
 import AboutImage from '../components/AboutImage'
+import { groq } from 'next-sanity'
+import { client } from '../sanity/lib/client'
 
-export default function Home() {
+const query = groq`*[_type == "projects" && featured == true] | order(orderRank asc) {
+    _id,
+    title,
+    description,
+    slug,
+}`
+
+export default async function Home() {
+  const caseStudies = await client.fetch(query)
+
   return (
     <main>
 
@@ -40,24 +51,24 @@ export default function Home() {
 
       {/* Case Study Sections */}
       <CaseStudySection
-        title="Increased Conversions 35% with Custom Analytics and A/B Testing"
-        description="jago pasang cookies untuk ngetrack button, links, behavior lainnya, jago pasang GA 4, Jago a b testing pakai data"
-        link="#"
+        title={caseStudies[0].title}
+        description={caseStudies[0].description}
+        link={`/case-study/${caseStudies[0].slug.current}`}
         darkVideo="/casestudy-1-b.webm"
         lightVideo="/casestudy-1-w.webm"
       />
       <CaseStudySection
         variant="type B"
-        title="Increased Conversions 35% with Custom Analytics and A/B Testing"
-        description="jago pasang cookies untuk ngetrack button, links, behavior lainnya, jago pasang GA 4, Jago a b testing pakai data"
-        link="#"
+        title={caseStudies[1].title}
+        description={caseStudies[1].description}
+        link={`/case-study/${caseStudies[1].slug.current}`}
         darkVideo="/casestudy-2-b.webm"
         lightVideo="/casestudy-2-w.webm"
       />
       <CaseStudySection
-        title="Increased Conversions 35% with Custom Analytics and A/B Testing"
-        description="jago pasang cookies untuk ngetrack button, links, behavior lainnya, jago pasang GA 4, Jago a b testing pakai data"
-        link="#"
+        title={caseStudies[2].title}
+        description={caseStudies[2].description}
+        link={`/case-study/${caseStudies[2].slug.current}`}
         darkVideo="/casestudy-1-b.webm"
         lightVideo="/casestudy-1-w.webm"
       />

@@ -1,32 +1,25 @@
-import ShopCard from "@/components/ShopCard"
-import Tag from '@/components/Tag'
+import ShopList from "@/components/ShopList"
 import MotionDiv from "@/components/MotionDiv";
-import SearchInput from "@/components/SearchInput";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { groq } from "next-sanity";
 
-// Pre-render halaman ini saat `npm run build` — navigasi dari Home akan instan
-export const dynamic = 'force-static'
-
-interface SanityShopItem {
-    _id: string
-    title: string
-    slug: { current: string }
-    coverImage: object
-    price: number
-}
+// // Pre-render halaman ini saat `npm run build` — navigasi dari Home akan instan
+// export const dynamic = 'force-static'
 
 const query = groq`*[_type == "shop"] | order(orderRank asc) {
     _id,
     title,
     slug,
+    tags,
     coverImage,
+    category,
     price
 }`
 
 export default async function Shop() {
-    const items: SanityShopItem[] = await client.fetch(query)
+    const shop = await client.fetch(query)
+
     return (
         <main>
             <section className="flex-col pt-40 gap-16">
@@ -37,31 +30,18 @@ export default async function Shop() {
                         <br />
                         My Shop
                     </h1>
-
                 </MotionDiv>
 
-                <MotionDiv variant="up" del={0.5}>
-                    <ul className="flex flex-wrap justify-center gap-2 w-full">
-                        <Tag title="All" clickable />
-                        <Tag title="Website Templates" clickable />
-                        <Tag title="Sheet Music" clickable />
-                        <Tag title="Others" clickable />
-                    </ul>
-                </MotionDiv>
-
-                <MotionDiv variant="up" del={0.7} styles="flex flex-col flex-1 gap-2">
-                    <SearchInput />
-                    <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-                        {items.map((item) => (
-                            <ShopCard
-                                key={item._id}
-                                title={item.title}
-                                image={urlFor(item.coverImage).width(600).url()}
-                                link={`/shop/${item.slug.current}`}
-                                price={item.price}
-                            />
-                        ))}
-                    </div>
+                <MotionDiv variant="up" del={0.7} styles="flex flex-col flex-1 gap-2 w-full">
+                    <ShopList items={shop.map((e: any) => ({
+                        _id: e._id,
+                        title: e.title,
+                        image: urlFor(e.coverImage).url(),
+                        price: e.price,
+                        tags: e.tags,
+                        category: e.category,
+                        link: `/shop/${e.slug.current}`,
+                    }))} />
                 </MotionDiv>
 
             </section>

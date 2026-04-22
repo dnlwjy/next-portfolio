@@ -9,8 +9,8 @@ import { cookies } from "next/headers"
 import ThemeProvider from "@/context/ThemeProvider"
 
 export const metadata: Metadata = {
-  title: "Daniel Wijaya — UX Engineer",
-  description: "Bridging design and code — from Figma and Framer to production-ready Next.js. Open to full-time opportunities in Singapore and Australia.",
+  title: "Daniel Wijaya | UX Engineer",
+  description: "Bridging design and code — from Figma and Framer to production-ready Next.js.",
   icons: {
     icon: '/favicon.png',
   },

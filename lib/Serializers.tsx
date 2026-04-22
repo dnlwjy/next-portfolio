@@ -19,7 +19,7 @@ const serializers: PortableTextComponents = {
       return (
         <img
           src={urlFor(value).url()}
-          alt={value.alt || "Project image"}
+          alt={value.alt}
           className="w-full h-auto object-cover my-4 border border-(--divider)"
         />
       );
