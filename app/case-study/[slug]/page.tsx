@@ -1,14 +1,13 @@
-import MotionDiv from '../../../components/MotionDiv';
-import SubInfo from '../../../components/SubInfo';
-import Tag from '../../../components/Tag';
-import { client } from '../../../sanity/lib/client'
-import { groq } from 'next-sanity'
-import { PortableText } from "@portabletext/react";
-import Serializers from "@/lib/Serializers";
-import Image from 'next/image';
-import { urlFor } from '../../../sanity/lib/image'
+import MotionDiv from '../../../components/MotionDiv'
+import SubInfo from '../../../components/SubInfo'
+import Tag from '../../../components/Tag'
+import { client } from '../../../sanity/client'
+import { PortableText } from "@portabletext/react"
+import Serializers from "@/lib/Serializers"
+import Image from 'next/image'
+import { urlFor } from '../../../sanity/image'
 
-const query = groq`*[_type == "projects" && slug.current == $slug][0]{
+const query = `*[_type == "projects" && slug.current == $slug][0]{
     _id,
     title,
     tags,
@@ -25,7 +24,7 @@ const query = groq`*[_type == "projects" && slug.current == $slug][0]{
 
 // // Pre-render semua slug dari Sanity saat `npm run build`
 // export async function generateStaticParams() {
-//     const slugs: string[] = await client.fetch(groq`*[_type == "projects"].slug.current`)
+//     const slugs: string[] = await client.fetch(`*[_type == "projects"].slug.current`)
 //     return slugs.map((slug) => ({ slug }))
 // }
 

@@ -1,13 +1,12 @@
 import ShopList from "@/components/ShopList"
-import MotionDiv from "@/components/MotionDiv";
-import { client } from "@/sanity/lib/client";
-import { urlFor } from "@/sanity/lib/image";
-import { groq } from "next-sanity";
+import MotionDiv from "@/components/MotionDiv"
+import { client } from "@/sanity/client"
+import { urlFor } from "@/sanity/image"
 
 // // Pre-render halaman ini saat `npm run build` — navigasi dari Home akan instan
 // export const dynamic = 'force-static'
 
-const query = groq`*[_type == "shop"] | order(orderRank asc) {
+const query = `*[_type == "shop"] | order(orderRank asc) {
     _id,
     title,
     slug,

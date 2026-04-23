@@ -1,13 +1,12 @@
 import MotionDiv from '../../components/MotionDiv'
-import { client } from '../../sanity/lib/client'
-import { groq } from 'next-sanity'
+import { client } from '../../sanity/client'
 import CaseStudyCard from '../../components/CaseStudyCard'
-import { urlFor } from '../../sanity/lib/image'
+import { urlFor } from '../../sanity/image'
 
 // // Pre-render halaman ini saat `npm run build` — navigasi dari Home akan instan
 // export const dynamic = 'force-static'
 
-const query = groq`*[_type == "projects"] | order(orderRank asc) {
+const query = `*[_type == "projects"] | order(orderRank asc) {
     _id,
     coverImage,
     title,

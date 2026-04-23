@@ -3,14 +3,13 @@ import MotionDiv from '../components/MotionDiv'
 import LinkButton from '../components/LinkButton'
 import CaseStudySection from '../components/CaseStudySection'
 import AboutImage from '../components/AboutImage'
-import { groq } from 'next-sanity'
-import { client } from '../sanity/lib/client'
+import { client } from '../sanity/client'
 
-const query = groq`*[_type == "projects" && featured == true] | order(orderRank asc) {
-    _id,
-    title,
-    description,
-    slug,
+const query = `*[_type == "projects" && featured == true] | order(orderRank asc) {
+  _id,
+  title,
+  description,
+  slug,
 }`
 
 export default async function Home() {
@@ -54,23 +53,20 @@ export default async function Home() {
         title={caseStudies[0].title}
         description={caseStudies[0].description}
         link={`/case-study/${caseStudies[0].slug.current}`}
-        darkVideo="/casestudy-1-b.webm"
-        lightVideo="/casestudy-1-w.webm"
+        video="/cs1.webm"
       />
       <CaseStudySection
         variant="type B"
         title={caseStudies[1].title}
         description={caseStudies[1].description}
         link={`/case-study/${caseStudies[1].slug.current}`}
-        darkVideo="/casestudy-2-b.webm"
-        lightVideo="/casestudy-2-w.webm"
+        video="/cs2.webm"
       />
       <CaseStudySection
         title={caseStudies[2].title}
         description={caseStudies[2].description}
         link={`/case-study/${caseStudies[2].slug.current}`}
-        darkVideo="/casestudy-1-b.webm"
-        lightVideo="/casestudy-1-w.webm"
+        video="/cs1.webm"
       />
 
       {/* About me */}

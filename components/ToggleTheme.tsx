@@ -28,10 +28,6 @@ const ToggleTheme = ({ styles = "" }: { styles?: string }) => {
     const progress = useMotionValue(isDark ? 1 : 0)
     const [pathD, setPathD] = useState(() => isDark ? CIRCLE_PATH : MOON_PATH)
 
-    useEffect(() => {
-        progress.set(isDark ? 1 : 0)
-    }, [isDark, progress])
-
     // Memoize morph interpolators for performance
     const [moonToCircle, circleToMoon] = useMemo(() => {
         return [

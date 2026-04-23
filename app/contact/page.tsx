@@ -2,10 +2,9 @@ import MotionDiv from '../../components/MotionDiv'
 import ContactForm from '@/components/ContactForm'
 import FaqAccordion from '@/components/FaqAccordion'
 import SubInfo from '@/components/SubInfo'
-import { groq } from 'next-sanity'
-import { client } from '@/sanity/lib/client'
+import { client } from '@/sanity/client'
 
-const query = groq`*[_type == "faq"] | order(orderRank asc) {
+const query = `*[_type == "faq"] | order(orderRank asc) {
     _id,
     question,
     answer,

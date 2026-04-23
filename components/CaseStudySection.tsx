@@ -4,14 +4,12 @@ import { useRef, useEffect } from 'react'
 import MotionDiv from './MotionDiv'
 import LinkButton from './LinkButton'
 import { m, useScroll, useTransform, useSpring, useInView } from "framer-motion"
-import { useTheme } from '@/context/ThemeProvider';
 
 interface CaseStudySectionProps {
     title: string;
     description: string;
     link: string;
-    darkVideo: string;
-    lightVideo: string;
+    video: string;
     variant?: keyof typeof variantCaseStudySection;
 }
 
@@ -30,18 +28,15 @@ const variantCaseStudySection = {
     },
 } as const
 
-const A = "absolute inset-x-0 h-12"
-const B = "absolute inset-y-0 w-24"
+const springConfig = { stiffness: 132, damping: 60 }
 
 const CaseStudySection = ({
     title,
     description,
     link,
-    darkVideo,
-    lightVideo,
+    video,
     variant = "type A"
 }: CaseStudySectionProps) => {
-    const { theme } = useTheme();
     const sectionRef = useRef<HTMLDivElement>(null)
     const videoRef = useRef<HTMLVideoElement>(null)
     const visible = useInView(videoRef, { amount: 0 })
@@ -54,14 +49,12 @@ const CaseStudySection = ({
         } else {
             video.pause();
         }
-    }, [visible, theme]);
+    }, [visible]);
 
     const { scrollYProgress } = useScroll({
         target: sectionRef,
         offset: ["start 80%", "end 20%"]
     })
-
-    const springConfig = { stiffness: 132, damping: 60 }
 
     const opacity = useSpring(useTransform(
         scrollYProgress,
@@ -98,15 +91,13 @@ const CaseStudySection = ({
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 aspect-video w-[175%]">
                     <video
                         ref={videoRef}
-                        src={theme === 'dark' ? darkVideo : lightVideo} loop muted playsInline preload="auto"
+                        src={video}
+                        loop
+                        muted
+                        playsInline
+                        preload="auto"
                         className="absolute inset-0 mx-auto h-full"
                     />
-                    <div className={`absolute ${variantCaseStudySection[variant].shade}`}>
-                        <div className={`${A} top-0 bg-[linear-gradient(to_bottom,var(--black),transparent)]`} />
-                        <div className={`${B} left-0 bg-[linear-gradient(to_right,var(--black),transparent)]`} />
-                        <div className={`${B} right-0 bg-[linear-gradient(to_left,var(--black),transparent)]`} />
-                        <div className={`${A} bottom-0 bg-[linear-gradient(to_top,var(--black),transparent)]`} />
-                    </div>
                 </div>
             </m.div>
 

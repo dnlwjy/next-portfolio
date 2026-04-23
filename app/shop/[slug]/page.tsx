@@ -1,14 +1,13 @@
-import MotionDiv from "@/components/MotionDiv";
-import { groq } from 'next-sanity'
-import { client } from "@/sanity/lib/client";
+import MotionDiv from "@/components/MotionDiv"
+import { client } from "@/sanity/client"
 import { PortableText } from '@portabletext/react'
 import Serializers from '@/lib/Serializers'
 import Tag from '../../../components/Tag'
-import ShopSupport from "./ShopSupport";
-import { urlFor } from "@/sanity/lib/image";
-import ImageShop from "@/components/ImageShop";
+import ShopSupport from "./ShopSupport"
+import { urlFor } from "@/sanity/image"
+import ImageShop from "@/components/ImageShop"
 
-const query = groq`*[_type == "shop" && slug.current == $slug][0]{
+const query = `*[_type == "shop" && slug.current == $slug][0]{
     _id,
     title,
     description,
@@ -27,7 +26,7 @@ const query = groq`*[_type == "shop" && slug.current == $slug][0]{
 
 // // Pre-render semua slug dari Sanity saat `npm run build`
 // export async function generateStaticParams() {
-//     const slugs: string[] = await client.fetch(groq`*[_type == "shop"].slug.current`)
+//     const slugs: string[] = await client.fetch(`*[_type == "shop"].slug.current`)
 //     return slugs.map((slug) => ({ slug }))
 // }
 
