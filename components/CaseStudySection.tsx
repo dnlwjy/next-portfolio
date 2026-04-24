@@ -80,7 +80,7 @@ const CaseStudySection = ({
                 </div>
                 <h2>{title}</h2>
                 <p className="w-[90%]">{description}</p>
-                <LinkButton title="View Project" link={link} />
+                <LinkButton title="View Details" link={link} />
             </MotionDiv>
 
             {/* VIDEO */}

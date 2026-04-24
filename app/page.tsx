@@ -4,6 +4,7 @@ import LinkButton from '../components/LinkButton'
 import CaseStudySection from '../components/CaseStudySection'
 import AboutImage from '../components/AboutImage'
 import { client } from '../sanity/client'
+import A from '../components/A'
 
 const query = `*[_type == "projects" && featured == true] | order(orderRank asc) {
   _id,
@@ -87,8 +88,9 @@ export default async function Home() {
           del={0.5}
           styles="flex-1 min-w-90 mt-10 max-w-170">
           <p>
-            With a mixed background in design and coding, I have a solid foundation to make a step up as a UX Engineer. I'm responsible in building design systems, advocating user experience, and ensuring scalable business. I'm highly data-driven, I use tracking tools to analyze user behavior and collect non-sensitive data. I rely heavily on data to understand how people actually behave, not just how we think they do. My role has always been about connecting the dots: between developers, users, and business, I'm the bridge.<br /><br />
-            If you’re interested in the software and hardware I use, you may check out my uses page. Meanwhile, you can also explore my other passion in music composing piano music. I'm an ex Dota 2 addict, if ever also played Dota 2 you might want to find a hidden easter egg in this website that only Dota players will recognize. Let’s find that easter egg.<br /><br />
+            I currently work at <A link="https://www.told.co.nz/" title="Told" /> remotely as a UI designer and Framer developer. I enjoy taking time to understand how things move, how people think, to help shape me and the products I bring to life. Outside work, I build my own projects and make <A link="https://open.spotify.com/artist/0VyiZOjAOfYc0gV7EbT4v0" title="new-age music" /> for piano and strings.<br /><br />
+            I specialize in design-to-code implementation and responsible to shape the business and making the business scalable. Though I might be associated with frontends, I'm highly data-driven. I use data to analyze people's behavior and understand how things move, not just how we think. My expertise lies in building design systems, advocating user experience (UX), and ensuring scalable business. My role has always been about connecting the dots between designers, developers, users, and business.<br /><br />
+            I am currently available for a full-time role for UX engineer role in probably in Australia or Singapore. If you’re interested in the software and hardware I use, you may check out my <A link="/resources" title="resources page" />.
           </p>
         </MotionDiv>
       </section>

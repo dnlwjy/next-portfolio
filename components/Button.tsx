@@ -14,10 +14,10 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const variantButton = {
     "primary": {
         base: "bg-(--white)",
-        hover: "bg-(--divider)"},
+        hover: "bg-(--black)/90"},
     "secondary": {
-        base: "bg-(--black)",
-        hover: "bg-(--divider)"},
+        base: "bg-(--divider)",
+        hover: "bg-(--black)/50"},
 }
 
 const Button = ({

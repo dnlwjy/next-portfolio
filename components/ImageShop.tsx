@@ -13,12 +13,15 @@ const BaseImage = ({
     image,
     alt,
     styles = "",
-}: BaseImageProps) => (
+    onLoad,
+}: BaseImageProps & { onLoad?: (e: React.SyntheticEvent<HTMLImageElement>) => void }) => (
     <Image
         src={image}
         alt={alt}
         fill
-        className={`object-contain select-none pointer-events-none ${styles}`}
+        className={`object-contain select-none ${styles}`}
+        // onLoad diteruskan agar memastikan ukuran asli gambar untuk magnifier kalau tidak bisa salah posisi/error
+        onLoad={onLoad}
     />
 )
 

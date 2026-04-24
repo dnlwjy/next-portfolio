@@ -46,9 +46,10 @@ export const withMagnifier = <P extends { image: string; alt: string }>(
             >
                 <Component
                     {...props}
-                    onLoad={(e: React.SyntheticEvent<HTMLImageElement>) =>
-                        setNaturalSize({ w: e.currentTarget.naturalWidth, h: e.currentTarget.naturalHeight })
-                    }
+                    onLoad={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                        const target = e.target as HTMLImageElement
+                        setNaturalSize({ w: target.naturalWidth, h: target.naturalHeight })
+                    }}
                 />
 
                 {lens.visible && (

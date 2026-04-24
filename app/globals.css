@@ -77,9 +77,9 @@ h1, h2 {
 h1 { @apply lg:text-[96px] sm:text-[72px] text-[48px]; }
 h2 { @apply sm:text-[32px] text-[24px]; }
 
-p { @apply leading-[160%] text-start text-(--bodytext); }
+p, a { @apply leading-[160%] text-start text-(--bodytext); }
 p.tag { @apply uppercase sm:text-[12px] text-[11px] tracking-[0.15em] text-(--bodytext); }
-p.sm, a { @apply text-[16px]; }
+p.sm { @apply text-[16px]; }
 
 input, textarea {
   @apply w-full bg-transparent border border-(--divider) px-4 py-3 text-(--white) placeholder:text-(--divider) focus:outline-none focus:border-(--white) transition-colors duration-300;

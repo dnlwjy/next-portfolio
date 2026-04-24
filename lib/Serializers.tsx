@@ -1,5 +1,5 @@
 import { PortableTextComponents } from '@portabletext/react';
-import { urlFor } from "@/sanity/lib/image";
+import { urlFor } from "@/sanity/image";
 import A from '../components/A'
 
 const serializers: PortableTextComponents = {

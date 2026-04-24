@@ -36,22 +36,27 @@ export default async function ShopDetail({ params }: { params: Promise<{ slug: s
 
     return (
         <main>
-            <section className="flex-col md:flex-row pt-40 gap-16">
-                <MotionDiv styles="flex flex-col relative justify-center items-center gap-4 w-1/3 min-w-[560px] aspect-square border border-(--divider) bg-(--white)/7">
-                        {shopItem.coverImage && (
-                            <ImageShop
-                                image={urlFor(shopItem.coverImage).width(800).format("webp").url()}
-                                alt={shopItem.title}
-                            />
-                        )}
+            <section className="flex-col md:flex-row pt-40 gap-16 max-w-640">
+                <MotionDiv styles="flex flex-col relative justify-center items-center gap-4 md:w-1/3 w-full md:min-w-[520px] max-w-[640px] aspect-square border border-(--divider) bg-(--white)/7">
+                    {shopItem.coverImage && (
+                        <ImageShop
+                            image={urlFor(shopItem.coverImage).width(800).format("webp").url()}
+                            alt={shopItem.title}
+                        />
+                    )}
+                    <Tag title={shopItem.category} styles="absolute top-4 right-4" />
                 </MotionDiv>
 
                 <MotionDiv variant="right" del={0.5} styles="flex flex-col gap-8 flex-1">
-                    <Tag title={shopItem.category} styles="w-fit" />
                     <div className="flex flex-col gap-4">
                         <h1>{shopItem.title}</h1>
                         <p>{shopItem.description}</p>
-                        <p className="text-(--white) text-[28px] md:text-[36px]">${shopItem.price}</p>
+                        <p className="text-(--white) text-[28px] md:text-[36px]">
+                            {shopItem.price === 0 ? 'FREE' : shopItem.price.toLocaleString("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                            })}
+                        </p>
                     </div>
 
                     <ShopSupport checkoutURL={shopItem.checkout} previewURL={shopItem.preview} />
