@@ -26,6 +26,7 @@ export default async function Home() {
           <Ava />
 
           <MotionDiv
+            del={0.5}
             variant="up"
             styles="flex flex-col gap-12 items-center z-10">
             <h1 className="text-center">
@@ -55,6 +56,7 @@ export default async function Home() {
         description={caseStudies[0].description}
         link={`/case-study/${caseStudies[0].slug.current}`}
         video="/cs1.webm"
+        loopStart={3.8}
       />
       <CaseStudySection
         variant="type B"
@@ -67,7 +69,8 @@ export default async function Home() {
         title={caseStudies[2].title}
         description={caseStudies[2].description}
         link={`/case-study/${caseStudies[2].slug.current}`}
-        video="/cs1.webm"
+        video="/cs3.webm"
+        loopStart={2.3}
       />
 
       {/* About me */}

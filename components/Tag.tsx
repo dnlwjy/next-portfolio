@@ -14,7 +14,6 @@ const variantTag = {
 
 const Tag = ({
     title,
-
     variant = "static",
     click,
     styles = "",

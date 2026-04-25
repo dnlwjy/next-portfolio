@@ -12,9 +12,9 @@ const SubInfo = ({
     const isExternal = /^(https?:)?\/\//.test(subtitle);
 
     return (
-        <div className={`flex flex-col gap-2 p-4 sm:p-6 justify-center flex-1 border border-(--divider) ${styles}`}>
+        <div className={`flex flex-col gap-2 p-5 sm:p-6 justify-center flex-1 border border-(--divider) ${styles}`}>
 
-            <p className="tag">{title}</p>
+            <span className="tag">{title}</span>
 
             {isExternal ? (
                 <a

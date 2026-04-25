@@ -38,7 +38,7 @@ const Button = ({
                     relative ${variantButton[variant].base} w-full px-6 h-12 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed
                     [clip-path:polygon(0_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%)] ${styles}`}
         >
-            <span className={`absolute bottom-0 right-0 ${variantButton[variant].hover} ${buttonHover || additionalHoverLogic ? "w-full h-full rounded-none" : "w-0 h-0 rounded-[100px]"} transition-all duration-600 ease-in-out`} />
+            <span className={`absolute bottom-0 right-0 ${variantButton[variant].hover} ${buttonHover || additionalHoverLogic ? "w-full h-full rounded-none" : "w-0 h-0 rounded-[100px] rounded-br-none"} transition-all duration-600 ease-in-out`} />
             <span className="btn-text text-white mix-blend-difference">{title}</span>
         </button>
     )

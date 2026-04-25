@@ -1,35 +1,52 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import { useTheme } from "@/context/ThemeProvider"
 import Button from './Button'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 type FormState = {
     name: string;
     email: string;
     message: string;
+    recaptcha: string;
 }
 
 type StatusType = 'idle' | 'sending' | 'success' | 'error'
 
-function buttonLogic(a: StatusType) {
+function logicSubmitButton(a: StatusType) {
     if (a === 'sending') return 'Sending...'
     if (a === 'success') return 'Sent !'
     if (a === 'error') return 'Something went wrong. Please try again.'
     return 'Send Message'
 }
 
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string
+
+const wrapperStyles = "flex flex-col gap-2"
+
 const ContactForm = ({ styles = "" }: { styles?: string }) => {
-    const [form, setForm] = useState<FormState>({ name: '', email: '', message: '' })
+    const [form, setForm] = useState<FormState>({ name: '', email: '', message: '', recaptcha: '' })
     const [status, setStatus] = useState<StatusType>('idle')
-    const [buttonHover, setButtonHover] = useState(false)
+    const recaptchaRef = useRef<ReCAPTCHA>(null)
+    const { theme } = useTheme()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
+    const handleRecaptcha = (token: string | null) => {
+        setForm((prev) => ({ ...prev, recaptcha: token || '' }))
+    }
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setStatus('sending')
+
+        if (!form.recaptcha) {
+            setStatus('error')
+            return
+        }
 
         try {
             const res = await fetch('/api/contact', {
@@ -41,13 +58,12 @@ const ContactForm = ({ styles = "" }: { styles?: string }) => {
             if (!res.ok) throw new Error()
 
             setStatus('success')
-            setForm({ name: '', email: '', message: '' })
+            setForm({ name: '', email: '', message: '', recaptcha: '' })
+            recaptchaRef.current?.reset()
         } catch {
             setStatus('error')
         }
     }
-
-    const wrapperStyles = "flex flex-col gap-2"
 
     return (
         <form
@@ -57,8 +73,8 @@ const ContactForm = ({ styles = "" }: { styles?: string }) => {
             role="form"
             autoComplete="on"
         >
-            <label className={wrapperStyles} htmlFor="contact-name">
-                <p className="tag">Full Name</p>
+            <div className={wrapperStyles}>
+                <label className="tag" htmlFor="contact-name">Full Name</label>
                 <input
                     id="contact-name"
                     type="text"
@@ -72,9 +88,9 @@ const ContactForm = ({ styles = "" }: { styles?: string }) => {
                     aria-required="true"
                     autoComplete="name"
                 />
-            </label>
-            <label className={wrapperStyles} htmlFor="contact-email">
-                <p className="tag">Your Email</p>
+            </div>
+            <div className={wrapperStyles}>
+                <label className="tag" htmlFor="contact-email">Your Email</label>
                 <input
                     id="contact-email"
                     type="email"
@@ -87,9 +103,9 @@ const ContactForm = ({ styles = "" }: { styles?: string }) => {
                     aria-required="true"
                     autoComplete="email"
                 />
-            </label>
-            <label className={wrapperStyles} htmlFor="contact-message">
-                <p className="tag">Your Message</p>
+            </div>
+            <div className={wrapperStyles}>
+                <label className="tag" htmlFor="contact-message">Your Message</label>
                 <textarea
                     id="contact-message"
                     name="message"
@@ -101,18 +117,26 @@ const ContactForm = ({ styles = "" }: { styles?: string }) => {
                     aria-label="Your message"
                     aria-required="true"
                 />
-            </label>
+            </div>
+            {/* --- reCAPTCHA --- */}
+            <div className="flex justify-start mt-4">
+                <ReCAPTCHA
+                    key={theme}
+                    ref={recaptchaRef}
+                    sitekey={RECAPTCHA_SITE_KEY}
+                    theme={theme}
+                    onChange={handleRecaptcha}
+                />
+            </div>
             <Button
-                title={buttonLogic(status)}
+                title={logicSubmitButton(status)}
                 additionalHoverLogic={status === "sending" || status === "success"}
                 type="submit"
                 disabled={status === 'sending' || status === 'success'}
-                onMouseEnter={() => setButtonHover(true)}
-                onMouseLeave={() => setButtonHover(false)}
                 styles={`
                     relative bg-(--white) w-full px-6 h-12 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed
                     [clip-path:polygon(0_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%)]`}
-                aria-label={buttonLogic(status)}
+                aria-label={logicSubmitButton(status)}
                 aria-live="polite"
             />
         </form>

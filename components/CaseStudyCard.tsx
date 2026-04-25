@@ -43,7 +43,7 @@ export const CaseStudyCard = ({
                         <Tag key={e} title={e} />
                     ))}
                 </ul>
-                <p className="tag text-(--gray) order-1 md:order-2">{year}</p>
+                <span className="tag text-(--gray) order-1 md:order-2">{year}</span>
             </div>
 
             <div className="flex flex-col gap-4">

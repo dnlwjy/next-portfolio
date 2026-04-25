@@ -12,7 +12,7 @@ const query = `*[_type == "faq"] | order(orderRank asc) {
 
 export default async function Contact() {
     const faq = await client.fetch(query)
-    
+
     return (
         <main>
             <section id="contact" className="sm pb-32">

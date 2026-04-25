@@ -13,7 +13,7 @@ const AvaComponent = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0 }}
-            transition={{ duration: 1, ease: [0.44, 0, 0.56, 1] }}
+            transition={{ duration: 1, ease: [0.44, 0, 0.56, 1], delay: 0.3 }}
             className="aspect-3/4 h-[138%] relative"
         >
             <video
@@ -51,7 +51,7 @@ const Ava = () => {
                     initial={{ opacity: 0, y: 48 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 80, mass: 1, delay: 0.5 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 80, mass: 1, delay: 0.8 }}
                     className="absolute w-full aspect-square -bottom-16"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 524 524">

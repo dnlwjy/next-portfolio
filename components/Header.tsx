@@ -63,7 +63,7 @@ const Header = ({ styles = "" }: { styles?: string }) => {
                 <Link key={e.id} href={e.link}
                     className="group relative h-10 w-10 flex items-center justify-center">
                     <e.icon styles={`${active?.id === e.id ? "text-(--white)" : "text-(--gray) group-hover:text-(--white)"} transition-colors duration-300`} />
-                    <span className="absolute top-full mt-2 px-2 py-1 bg-(--divider) rounded whitespace-nowrap opacity-0 group-hover:opacity-100 -translate-y-4 group-hover:translate-y-0 transition-all duration-300 ease-in-out pointer-events-none">
+                    <span className="absolute top-full mt-2 px-2 py-1 bg-(--divider) rounded whitespace-nowrap opacity-0 group-hover:opacity-100 -translate-y-4 group-hover:translate-y-0 transition-all duration-300 ease-in-out pointer-events-none select-none">
                         <span className="absolute bottom-full left-1/2 -translate-x-1/2 w-3 h-2 bg-(--divider) [clip-path:polygon(50%_0%,0%_100%,100%_100%)]" />
                         <p className="text-[12px]">{e.id}<span className="text-[10px] text-(--gray)"> ({e.key})</span></p>
                     </span>

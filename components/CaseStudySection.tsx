@@ -11,6 +11,7 @@ interface CaseStudySectionProps {
     link: string;
     video: string;
     variant?: keyof typeof variantCaseStudySection;
+    loopStart?: number;
 }
 
 const variantCaseStudySection = {
@@ -35,12 +36,14 @@ const CaseStudySection = ({
     description,
     link,
     video,
-    variant = "type A"
+    variant = "type A",
+    loopStart = 0,
 }: CaseStudySectionProps) => {
     const sectionRef = useRef<HTMLDivElement>(null)
     const videoRef = useRef<HTMLVideoElement>(null)
     const visible = useInView(videoRef, { amount: 0 })
 
+    // Track if video has played at least once
     useEffect(() => {
         const video = videoRef.current;
         if (!video) return;
@@ -50,6 +53,22 @@ const CaseStudySection = ({
             video.pause();
         }
     }, [visible]);
+
+    // Custom loop: after first play, start from loopStart seconds
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        const handleEnded = () => {
+            video.currentTime = loopStart;
+            video.play().catch(() => { });
+        };
+
+        video.addEventListener('ended', handleEnded);
+        return () => {
+            video.removeEventListener('ended', handleEnded);
+        };
+    }, [loopStart]);
 
     const { scrollYProgress } = useScroll({
         target: sectionRef,
@@ -92,7 +111,6 @@ const CaseStudySection = ({
                     <video
                         ref={videoRef}
                         src={video}
-                        loop
                         muted
                         playsInline
                         preload="auto"
