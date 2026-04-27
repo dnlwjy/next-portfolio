@@ -3,8 +3,8 @@ import { client } from '../../sanity/client'
 import CaseStudyCard from '../../components/CaseStudyCard'
 import { urlFor } from '../../sanity/image'
 
-// // Pre-render halaman ini saat `npm run build` — navigasi dari Home akan instan
-// export const dynamic = 'force-static'
+// mengubah data jadi SSG - lebih cepat secara performa dan SEO tapi harus redeploy tiap ada perubahan data
+export const dynamic = 'force-static'
 
 const query = `*[_type == "projects"] | order(orderRank asc) {
     _id,
@@ -34,11 +34,11 @@ export default async function CaseStudy() {
                 <MotionDiv
                     variant="up"
                     del={0.5}
-                    styles="flex flex-col gap-4 w-full">
+                    styles="grid md:grid-cols-1 sm:grid-cols-2 grid-cols-1 gap-4 w-full">
                     {caseStudies.map((e: any) => (
                         <CaseStudyCard
                             key={e._id}
-                            image={urlFor(e.coverImage).width(360).format('webp').url()}
+                            image={urlFor(e.coverImage).width(600).format('webp').url()}
                             title={e.title}
                             desc={e.description}
                             tags={e.tags}

@@ -1,4 +1,4 @@
-export function pricingLogic(a: any) {
+export function logicPricing(a: any) {
     if (typeof a === "number") {
             if (a > 0) return `$${a}`
             if (a === 0 ) return "FREE"

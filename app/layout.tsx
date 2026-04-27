@@ -4,7 +4,6 @@ import { LazyMotion, domAnimation, MotionConfig } from "framer-motion"
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import ToggleTheme from '@/components/ToggleTheme'
-import LoadingScreen from '@/components/LoadingScreen'
 import { cookies } from "next/headers"
 import ThemeProvider from "@/context/ThemeProvider"
 
@@ -29,18 +28,16 @@ export default async function RootLayout({
     <html lang="en" className={initialTheme === "dark" ? "dark" : ""}>
       <body>
         <ThemeProvider initialTheme={initialTheme}>
-          <LoadingScreen>
-            <LazyMotion features={domAnimation} strict>
-              <MotionConfig
-                transition={{ type: "spring", stiffness: 500, damping: 50 }}
-              >
-                <Header styles="fixed top-6 inset-x-0 mx-auto z-50" />
-                <ToggleTheme styles="fixed top-8 right-8 z-50 sm:flex hidden" />
-                {children}
-                <Footer />
-              </MotionConfig>
-            </LazyMotion>
-          </LoadingScreen>
+          <LazyMotion features={domAnimation} strict>
+            <MotionConfig
+              transition={{ type: "spring", stiffness: 500, damping: 50 }}
+            >
+              <Header styles="fixed top-6 inset-x-0 mx-auto z-50" />
+              <ToggleTheme styles="fixed top-8 right-8 z-50 sm:flex hidden" />
+              {children}
+              <Footer />
+            </MotionConfig>
+          </LazyMotion>
         </ThemeProvider>
       </body>
     </html>

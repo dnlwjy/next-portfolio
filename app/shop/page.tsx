@@ -3,8 +3,13 @@ import MotionDiv from "@/components/MotionDiv"
 import { client } from "@/sanity/client"
 import { urlFor } from "@/sanity/image"
 
-// // Pre-render halaman ini saat `npm run build` — navigasi dari Home akan instan
-// export const dynamic = 'force-static'
+// mengubah data jadi SSG - lebih cepat secara performa dan SEO tapi harus redeploy tiap ada perubahan data
+export const dynamic = 'force-static'
+
+export const metadata = {
+  title: "Shop | Your Brand",
+  description: "Browse digital products, UI kits, and resources.",
+}
 
 const query = `*[_type == "shop"] | order(orderRank asc) {
     _id,
@@ -35,7 +40,7 @@ export default async function Shop() {
                     <ShopList items={shop.map((e: any) => ({
                         _id: e._id,
                         title: e.title,
-                        image: urlFor(e.coverImage).url(),
+                        image: urlFor(e.coverImage).width(320).format("webp").url(),
                         price: e.price,
                         tags: e.tags,
                         category: e.category,

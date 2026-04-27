@@ -20,6 +20,7 @@ const BaseImage = ({
         alt={alt}
         fill
         className={`object-contain select-none ${styles}`}
+        sizes="(max-width: 735px) 70vw, 480px"
         // onLoad diteruskan agar memastikan ukuran asli gambar untuk magnifier kalau tidak bisa salah posisi/error
         onLoad={onLoad}
     />

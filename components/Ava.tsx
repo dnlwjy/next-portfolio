@@ -17,7 +17,7 @@ const AvaComponent = () => {
             className="aspect-3/4 h-[138%] relative"
         >
             <video
-                src="/ava-black.webm"
+                src="/ava-black.mp4"
                 className={`${SUPPORT} ${theme === "dark" ? "opacity-100" : "opacity-0"}`}
                 preload="auto"
                 autoPlay
@@ -27,9 +27,8 @@ const AvaComponent = () => {
             />
 
             <video
-                src="/ava-white.webm"
+                src="/ava-white.mp4"
                 className={`${SUPPORT} ${theme === "light" ? "opacity-100" : "opacity-0"}`}
-                preload="auto"
                 autoPlay
                 loop
                 muted
@@ -45,7 +44,7 @@ const FollowVideo = withCursorFollow(AvaComponent);
 const Ava = () => {
     return (
         <div className="flex flex-1 items-start justify-center z-0">
-            <div className="aspect-3/4 h-[138%] relative">
+            <div className="aspect-3/4 h-[138%] relative min-w-80">
                 <FollowVideo />
                 <m.svg
                     initial={{ opacity: 0, y: 48 }}

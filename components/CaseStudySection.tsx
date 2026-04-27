@@ -37,7 +37,7 @@ const CaseStudySection = ({
     link,
     video,
     variant = "type A",
-    loopStart = 0,
+    loopStart = 0
 }: CaseStudySectionProps) => {
     const sectionRef = useRef<HTMLDivElement>(null)
     const videoRef = useRef<HTMLVideoElement>(null)
@@ -113,7 +113,6 @@ const CaseStudySection = ({
                         src={video}
                         muted
                         playsInline
-                        preload="auto"
                         className="absolute inset-0 mx-auto h-full"
                     />
                 </div>

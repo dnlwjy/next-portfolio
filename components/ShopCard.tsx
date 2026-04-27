@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { m } from 'framer-motion'
-import { pricingLogic } from '../lib/pricingLogic'
+import { logicPricing } from '../lib/logicPricing'
 
 interface ShopCardProps {
     title: any;
@@ -48,7 +48,7 @@ const ShopCard = ({
 
         <div className="p-3 sm:p-4 lg:p-5 flex justify-between items-end gap-2">
             <p className="tag line-clamp-2">{title}</p>
-            <p className="tag">{pricingLogic(price)}</p>
+            <p className="tag">{logicPricing(price)}</p>
         </div>
     </Link>
 )}

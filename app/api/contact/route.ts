@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { supabase } from '@/lib/supabase-server'
 
 export async function POST(request: Request) {
     // 1. Parse body
@@ -39,8 +40,22 @@ export async function POST(request: Request) {
 
     // 4. Proses form (kirim email / simpan ke DB)
     try {
-        // TODO: tambahkan logika pengiriman email atau simpan ke database di sini
-        console.log('Contact form submission:', { name, email, message })
+        const { error: dbError } = await supabase
+            .from('form_submissions')
+            .insert([
+                {
+                    name,
+                    email,
+                    message
+                }
+            ])
+
+        if (dbError) {
+            return NextResponse.json(
+                { error: 'Failed to save to database.' },
+                { status: 500 }
+            )
+        }
 
         return NextResponse.json({ success: true }, { status: 200 })
     } catch {

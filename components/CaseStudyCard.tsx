@@ -23,15 +23,14 @@ export const CaseStudyCard = ({
     link,
     styles = "",
 }: CaseStudyCardProps) => (
-    <MotionDiv variant="up" styles={`flex flex-col md:flex-row gap-8 p-8 sm:p-12 border border-(--divider) ${styles}`}>
+    <MotionDiv variant="up" styles={`flex flex-col md:flex-row gap-8 p-8 sm:p-6 md:p-12 border border-(--divider) ${styles}`}>
 
         <Image
             src={image}
             alt={title}
             width={400}
             height={300}
-            // let urlFor handle the optimization
-            unoptimized
+            sizes="(max-width: 1080px) 40vw, (max-width: 680px) 85vw, 320px"
             className="md:h-full md:w-80 w-full object-cover border border-(--divider)"
         />
 

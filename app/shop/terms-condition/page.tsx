@@ -1,5 +1,5 @@
-import SubInfo from '../../components/SubInfo';
-import MotionDiv from '../../components/MotionDiv';
+import SubInfo from '../../../components/SubInfo';
+import MotionDiv from '../../../components/MotionDiv';
 
 export default function Resources() {
     return (

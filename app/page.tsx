@@ -70,12 +70,12 @@ export default async function Home() {
         description={caseStudies[2].description}
         link={`/case-study/${caseStudies[2].slug.current}`}
         video="/cs3.webm"
-        loopStart={2.3}
+        loopStart={2.4}
       />
 
       {/* About me */}
-      <section className="flex-wrap max-w-480 items-start">
-        <MotionDiv styles="relative flex-1 aspect-3/4 min-w-90 max-w-170">
+      <section className="md:flex-row flex-col max-w-480 md:items-start items-center mt-0 sm:-mt-16 md:mt-0">
+        <MotionDiv styles="relative w-full aspect-3/4 min-w-108 max-w-170">
           <AboutImage />
           <div className="absolute z-10 inset-0 bg-[radial-gradient(farthest-side_at_center,#12121200_90%,var(--black)_100%)]" />
           <svg
@@ -89,11 +89,11 @@ export default async function Home() {
         <MotionDiv
           variant='right'
           del={0.5}
-          styles="flex-1 min-w-90 mt-10 max-w-170">
+          styles="w-full mt-10 max-w-170">
           <p>
             I currently work at <A link="https://www.told.co.nz/" title="Told" /> remotely as a UI designer and Framer developer. I enjoy taking time to understand how things move, how people think, to help shape me and the products I bring to life. Outside work, I build my own projects and make <A link="https://open.spotify.com/artist/0VyiZOjAOfYc0gV7EbT4v0" title="new-age music" /> for piano and strings.<br /><br />
             I specialize in design-to-code implementation and responsible to shape the business and making the business scalable. Though I might be associated with frontends, I'm highly data-driven. I use data to analyze people's behavior and understand how things move, not just how we think. My expertise lies in building design systems, advocating user experience (UX), and ensuring scalable business. My role has always been about connecting the dots between designers, developers, users, and business.<br /><br />
-            I am currently available for a full-time role for UX engineer role in probably in Australia or Singapore. If you’re interested in the software and hardware I use, you may check out my <A link="/resources" title="resources page" />.
+            I am currently available for a full-time role for UX engineer role in Australia or Singapore. If you’re interested in the software and hardware I use, you may check out my <A link="/resources" title="resources page" />.
           </p>
         </MotionDiv>
       </section>

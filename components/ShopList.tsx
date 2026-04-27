@@ -26,7 +26,7 @@ const ShopList = ({ items }: ShopListProps) => {
     })
 
     return (
-        <div className="flex flex-col flex-1 gap-6">
+        <div className="flex flex-col flex-1 gap-16">
 
             {/* Filter Tags */}
             <ul role="tablist" className="flex flex-wrap justify-center gap-2 w-full">
