@@ -44,7 +44,7 @@ const FollowVideo = withCursorFollow(AvaComponent);
 const Ava = () => {
     return (
         <div className="flex flex-1 items-start justify-center z-0">
-            <div className="aspect-3/4 h-[138%] relative min-w-80">
+            <div className="aspect-3/4 h-[138%] relative min-w-64">
                 <FollowVideo />
                 <m.svg
                     initial={{ opacity: 0, y: 48 }}

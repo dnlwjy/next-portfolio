@@ -5,7 +5,6 @@ import { client } from '../../../sanity/client'
 import { PortableText } from "@portabletext/react"
 import Serializers from "@/lib/Serializers"
 import CaseStudyCard from '../../../components/CaseStudyCard'
-import { urlFor } from '../../../sanity/image'
 import { notFound } from 'next/navigation'
 
 const query = `*[_type == "projects" && slug.current == $slug][0]{
@@ -20,7 +19,7 @@ const query = `*[_type == "projects" && slug.current == $slug][0]{
     website,
 }`
 
-const moreQuery = `*[_type == \"projects\" && slug.current != $slug][0...3]{
+const moreQuery = `*[_type == \"projects\" && slug.current != $slug]{
     _id,
     title,
     tags,
@@ -97,22 +96,18 @@ export default async function CaseStudyDetail({ params }: { params: Promise<{ sl
                         <path d="M42 5H0L6.26866 0H35.7313L42 5Z" fill="var(--divider)" />
                     </svg>
                 </div>
-                <MotionDiv
-                    variant="up"
-                    del={0.5}
-                    styles="grid md:grid-cols-1 sm:grid-cols-2 grid-cols-1 gap-4 w-full">
+                <div className="grid md:grid-cols-1 sm:grid-cols-2 grid-cols-1 gap-4 w-full">
                     {moreCaseStudies.map((e: any) => (
                         <CaseStudyCard
                             key={e._id}
                             desc={e.description}
-                            image={urlFor(e.coverImage).format('webp').url()}
                             link={`/case-study/${e.slug.current}`}
                             tags={e.tags}
                             title={e.title}
                             year={e.year}
                         />
                     ))}
-                </MotionDiv>
+                </div>
             </section>
         </main>
     );

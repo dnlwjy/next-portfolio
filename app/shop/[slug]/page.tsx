@@ -2,17 +2,16 @@ import MotionDiv from "@/components/MotionDiv"
 import { client } from "@/sanity/client"
 import { PortableText } from '@portabletext/react'
 import Serializers from '@/lib/Serializers'
-import Tag from '../../../components/Tag'
 import ShopSupport from "./ShopSupport"
 import { urlFor } from "@/sanity/image"
 import ImageShop from "@/components/ImageShop"
 import { notFound } from "next/navigation"
+import ShopList from "@/components/ShopList"
 
 const query = `*[_type == "shop" && slug.current == $slug][0]{
     _id,
     title,
     description,
-    tags,
     category,
     price,
     coverImage,
@@ -20,6 +19,16 @@ const query = `*[_type == "shop" && slug.current == $slug][0]{
     content,
     checkout,
     preview
+}`
+
+const moreQuery = `*[_type == \"shop\" && slug.current != $slug]{
+    _id,
+    title,
+    slug,
+    tags,
+    coverImage,
+    category,
+    price
 }`
 
 // mengubah data jadi SSG - lebih cepat secara performa dan SEO tapi harus redeploy tiap ada perubahan data
@@ -34,14 +43,15 @@ export async function generateStaticParams() {
 export default async function ShopDetail({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
     const shopItem = await client.fetch(query, { slug });
-    
+    const moreShopItems = await client.fetch(moreQuery, { slug });
+
     if (!shopItem) {
         notFound();
     }
-    
+
     return (
         <main>
-            <section className="flex-col md:flex-row pt-40 gap-16 max-w-640">
+            <section className="flex-col md:flex-row pt-40 gap-16 max-w-640 min-h-screen">
                 <MotionDiv styles="flex flex-col relative justify-center items-center gap-4 md:w-1/3 w-full md:min-w-[520px] max-w-[640px] aspect-square border border-(--divider) bg-(--white)/7">
                     {shopItem.coverImage && (
                         <ImageShop
@@ -49,7 +59,6 @@ export default async function ShopDetail({ params }: { params: Promise<{ slug: s
                             alt={shopItem.title}
                         />
                     )}
-                    <Tag title={shopItem.category} styles="absolute top-4 right-4" />
                 </MotionDiv>
 
                 <MotionDiv variant="right" del={0.5} styles="flex flex-col gap-8 flex-1">
@@ -75,6 +84,26 @@ export default async function ShopDetail({ params }: { params: Promise<{ slug: s
                         components={Serializers}
                     />
                 </MotionDiv>
+            </section>
+
+            <section id="more-shop-items" className="sm pt-20 gap-40">
+                <div className="flex w-18 border-b border-b-(--divider)">
+                    <svg width="42" height="5" viewBox="0 0 42 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M42 5H0L6.26866 0H35.7313L42 5Z" fill="var(--divider)" />
+                    </svg>
+                </div>
+                <ShopList
+                    hideFilters
+                    items={moreShopItems.map((e: any) => ({
+                        _id: e._id,
+                        title: e.title,
+                        image: urlFor(e.coverImage).width(320).format("webp").url(),
+                        price: e.price,
+                        tags: e.tags,
+                        category: e.category,
+                        link: `/shop/${e.slug.current}`,
+                    }))}
+                />
             </section>
 
         </main>

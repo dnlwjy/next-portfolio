@@ -19,9 +19,9 @@ const shopSupport = ({ checkoutURL, previewURL }: ShopSupportProps) => {
 
     return (
         <>
-            <div className="flex flex-col w-full gap-2 max-w-200">
+            <div className="flex flex-col sm:flex-row w-full gap-2 max-w-140">
                 <Button
-                    title="Purchase Now"
+                    title="Purchase"
                     additionalHoverLogic={open}
                     styles="w-full"
                     click={() => setOpen(true)}

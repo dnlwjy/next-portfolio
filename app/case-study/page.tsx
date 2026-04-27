@@ -1,7 +1,6 @@
 import MotionDiv from '../../components/MotionDiv'
 import { client } from '../../sanity/client'
 import CaseStudyCard from '../../components/CaseStudyCard'
-import { urlFor } from '../../sanity/image'
 
 // mengubah data jadi SSG - lebih cepat secara performa dan SEO tapi harus redeploy tiap ada perubahan data
 export const dynamic = 'force-static'
@@ -31,14 +30,10 @@ export default async function CaseStudy() {
                     <p className="text-center">Archive of completed projects from 2024 onwards.</p>
                 </MotionDiv>
 
-                <MotionDiv
-                    variant="up"
-                    del={0.5}
-                    styles="grid md:grid-cols-1 sm:grid-cols-2 grid-cols-1 gap-4 w-full">
+                <div className="grid md:grid-cols-1 sm:grid-cols-2 grid-cols-1 gap-4 w-full">
                     {caseStudies.map((e: any) => (
                         <CaseStudyCard
                             key={e._id}
-                            image={urlFor(e.coverImage).width(600).format('webp').url()}
                             title={e.title}
                             desc={e.description}
                             tags={e.tags}
@@ -46,7 +41,7 @@ export default async function CaseStudy() {
                             link={`/case-study/${e.slug.current}`}
                         />
                     ))}
-                </MotionDiv>
+                </div>
 
             </section>
         </main>

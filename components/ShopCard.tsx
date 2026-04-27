@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { m } from 'framer-motion'
 import { logicPricing } from '../lib/logicPricing'
 
+// all set to 'any' because we just pass the data from sanity directly
 interface ShopCardProps {
     title: any;
     image: any;
