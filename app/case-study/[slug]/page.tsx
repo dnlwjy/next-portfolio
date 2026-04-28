@@ -90,7 +90,7 @@ export default async function CaseStudyDetail({ params }: { params: Promise<{ sl
                 </MotionDiv>
             </section>
 
-            <section id="more-case-studies" className="sm pt-20 gap-40">
+            <section id="more-case-studies" className="sm pt-24 gap-40">
                 <div className="flex w-18 border-b border-b-(--divider)">
                     <svg width="42" height="5" viewBox="0 0 42 5" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M42 5H0L6.26866 0H35.7313L42 5Z" fill="var(--divider)" />

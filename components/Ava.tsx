@@ -27,7 +27,7 @@ const AvaComponent = () => {
             />
 
             <video
-                src="/ava-white.mp4"
+                src="/ava-white.webm"
                 className={`${SUPPORT} ${theme === "light" ? "opacity-100" : "opacity-0"}`}
                 autoPlay
                 loop
@@ -51,7 +51,7 @@ const Ava = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0 }}
                     transition={{ type: "spring", stiffness: 400, damping: 80, mass: 1, delay: 0.8 }}
-                    className="absolute w-full aspect-square -bottom-16"
+                    className="absolute w-full aspect-square sm:-bottom-16 bottom-16"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 524 524">
                     <path stroke="var(--divider)" d="M0 524 524 0M183.704 373l196-196" />
