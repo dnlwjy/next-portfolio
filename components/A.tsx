@@ -11,7 +11,7 @@ const A = ({
   link = "#",
   styles = ""
 }: AProps) => {
-  const wrapperStyles = `group inline-block relative text-(--white) hover:text-(--gray) transition-colors duration-300 ease-in-out ${styles}`
+  const wrapperStyles = `group inline-block relative ${styles}`
   const isExternal = link ? /^(https?:)?\/\//.test(link) : false;
 
   // JSX CONTENT
@@ -23,7 +23,6 @@ const A = ({
       />
     </>
   )
-
 
   if (isExternal) {
     return (

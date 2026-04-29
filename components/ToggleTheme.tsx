@@ -19,7 +19,7 @@ const MOON_PATH = "M28.752 22.002A9.72 9.72 0 0 1 25 22.75c-5.385 0-9.75-4.365-9
 // Circle params for flubber.toCircle (centered in 38x38 SVG)
 const CIRCLE_CENTER_X = 19;
 const CIRCLE_CENTER_Y = 19;
-const CIRCLE_RADIUS = 9;
+const CIRCLE_RADIUS = 5;
 const CIRCLE_PATH: string = toCircle(MOON_PATH, CIRCLE_CENTER_X, CIRCLE_CENTER_Y, CIRCLE_RADIUS)(1);
 
 const ToggleTheme = ({ styles = "" }: { styles?: string }) => {
@@ -103,8 +103,6 @@ const ToggleTheme = ({ styles = "" }: { styles?: string }) => {
                     stroke="var(--gray)"
                     strokeWidth="1"
                     strokeLinejoin="round"
-                    vectorEffect="non-scaling-stroke"
-                    animate={isDark ? { scale: 0.6 } : { scale: 1 }}
                     style={{ originX: 0.5, originY: 0.5 }}
                 />
 

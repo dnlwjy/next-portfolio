@@ -12,7 +12,7 @@ interface ShopSupportProps {
     previewURL?: string
 }
 
-const shopSupport = ({ checkoutURL, previewURL }: ShopSupportProps) => {
+const BtnSupport = ({ checkoutURL, previewURL }: ShopSupportProps) => {
     const [open, setOpen] = useState(false)
 
     withScrollLock(open)
@@ -64,4 +64,4 @@ const shopSupport = ({ checkoutURL, previewURL }: ShopSupportProps) => {
     )
 }
 
-export default shopSupport
+export default BtnSupport

@@ -4,17 +4,18 @@ import { useRef, useEffect } from 'react'
 import MotionDiv from './MotionDiv'
 import LinkButton from './LinkButton'
 import { m, useScroll, useTransform, useSpring, useInView } from "framer-motion"
+import Divider from './Divider'
 
-interface CaseStudySectionProps {
+interface ProjectsSectionProps {
     title: string;
     description: string;
     link: string;
     video: string;
-    variant?: keyof typeof variantCaseStudySection;
+    variant?: keyof typeof variantProjectsSection;
     loopStart?: number;
 }
 
-const variantCaseStudySection = {
+const variantProjectsSection = {
     "type A": {
         item1: "order-2 sm:order-1",
         item2: "order-1 sm:order-2",
@@ -31,14 +32,14 @@ const variantCaseStudySection = {
 
 const springConfig = { stiffness: 132, damping: 60 }
 
-const CaseStudySection = ({
+const ProjectsSection = ({
     title,
     description,
     link,
     video,
     variant = "type A",
     loopStart = 0
-}: CaseStudySectionProps) => {
+}: ProjectsSectionProps) => {
     const sectionRef = useRef<HTMLDivElement>(null)
     const videoRef = useRef<HTMLVideoElement>(null)
     const visible = useInView(videoRef, { amount: 0 })
@@ -91,20 +92,16 @@ const CaseStudySection = ({
         <section ref={sectionRef} className="h-fit sm:h-[90vh] flex-col sm:flex-row items-start max-w-450 max-h-270 relative">
 
             {/* TEXT */}
-            <MotionDiv variant={variantCaseStudySection[variant].direction} styles={`flex flex-col gap-5 w-full sm:w-[35%] z-10 ${variantCaseStudySection[variant].item1}`}>
-                <div className="flex w-18 border-b border-b-(--divider)">
-                    <svg width="42" height="5" viewBox="0 0 42 5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M42 5H0L6.26866 0H35.7313L42 5Z" fill="var(--divider)" />
-                    </svg>
-                </div>
+            <MotionDiv variant={variantProjectsSection[variant].direction} styles={`flex flex-col gap-5 w-full sm:w-[35%] z-10 ${variantProjectsSection[variant].item1}`}>
+                <Divider />
                 <h2>{title}</h2>
                 <p className="w-[90%]">{description}</p>
-                <LinkButton title="View Details" link={link} />
+                <LinkButton title="View Project" link={link} />
             </MotionDiv>
 
             {/* VIDEO */}
             <m.div
-                className={`w-full h-60 sm:flex-1 sm:h-full relative z-0 pointer-events-none ${variantCaseStudySection[variant].item2}`}
+                className={`w-full h-60 sm:flex-1 sm:h-full relative z-0 pointer-events-none ${variantProjectsSection[variant].item2}`}
                 style={{ y, opacity }}
             >
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 aspect-video w-[175%]">
@@ -122,4 +119,4 @@ const CaseStudySection = ({
     )
 }
 
-export default CaseStudySection
+export default ProjectsSection

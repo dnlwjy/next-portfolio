@@ -19,12 +19,12 @@ const BaseImage = ({
         src={image}
         alt={alt}
         fill
+        sizes="(max-width: 680px) 90vw, 480px"
         className={`object-contain select-none ${styles}`}
-        // onLoad diteruskan agar memastikan ukuran asli gambar untuk magnifier kalau tidak bisa salah posisi/error
         onLoad={onLoad}
     />
 )
 
-const ImageShop = withMagnifier(BaseImage)
+const ItemZoom = withMagnifier(BaseImage)
 
-export default ImageShop
+export default ItemZoom

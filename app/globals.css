@@ -28,8 +28,6 @@
   --gray: #8E8E8E;
   --bodytext: #B8B8B8;
   --white: #FFFFFF;
-  --blue: #1F99FD;
-  /* DELETE BLUE LATER !!!!!!!!!!!!!!!!!!! */
 }
 
 .light {
@@ -38,8 +36,6 @@
   --gray: #8E8E8E;
   --bodytext: #606060;
   --white: #121212;
-  --blue: #1F99FD;
-  /* DELETE BLUE LATER !!!!!!!!!!!!!!!!!!! */
 }
 
 /* semantic styling */
@@ -58,7 +54,7 @@ html {
 }
 body {
   font-family: "inter", sans-serif;
-  @apply bg-(--black) text-[18px] text-(--bodytext) min-h-full;
+  @apply bg-(--black) text-[18px] text-(--bodytext) leading-[160%];
 }
 main {
   @apply flex flex-col gap-0 items-center w-full overflow-clip;
@@ -67,7 +63,7 @@ section {
   @apply flex px-5 py-16 sm:px-12 sm:py-32 md:p-32 gap-8 items-center justify-center w-full;
 }
 section.sm {
-  @apply flex-col pt-40 gap-16 max-w-400;
+  @apply flex-col pt-40 gap-24 max-w-400;
 }
 
 h1, h2 {
@@ -77,8 +73,9 @@ h1, h2 {
 h1 { @apply lg:text-[96px] sm:text-[72px] text-[48px]; }
 h2 { @apply sm:text-[32px] text-[24px]; }
 
-p, a { @apply leading-[160%] text-start text-(--bodytext); }
-p.sm { @apply text-[16px]; }
+p { @apply text-[18px] text-(--bodytext) leading-[160%] text-start; }
+a { @apply text-(--white) hover:text-(--gray) transition-colors duration-300; }
+p.sm, a.sm { @apply text-start text-[16px]; }
 
 input, textarea {
   @apply w-full bg-transparent border border-(--divider) px-4 py-3 text-(--white) placeholder:text-(--divider) focus:outline-none focus:border-(--white) transition-colors duration-300;

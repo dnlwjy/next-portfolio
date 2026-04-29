@@ -4,8 +4,6 @@ import { m } from 'framer-motion'
 import { withCursorFollow } from '@/lib/withCursorFollow';
 import { useTheme } from '@/context/ThemeProvider';
 
-const SUPPORT = "absolute top-0 inset-x-0 mx-auto w-full"
-
 const AvaComponent = () => {
     const { theme } = useTheme();
     return (
@@ -17,18 +15,10 @@ const AvaComponent = () => {
             className="aspect-3/4 h-[138%] relative"
         >
             <video
-                src="/ava-black.mp4"
-                className={`${SUPPORT} ${theme === "dark" ? "opacity-100" : "opacity-0"}`}
+                key={theme}
+                src={theme === "dark" ? "/ava-black.mp4" : "/ava-white.webm"}
+                className="absolute top-0 inset-x-0 mx-auto w-full"
                 preload="auto"
-                autoPlay
-                loop
-                muted
-                playsInline
-            />
-
-            <video
-                src="/ava-white.webm"
-                className={`${SUPPORT} ${theme === "light" ? "opacity-100" : "opacity-0"}`}
                 autoPlay
                 loop
                 muted

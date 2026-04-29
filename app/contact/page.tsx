@@ -2,7 +2,7 @@ import MotionDiv from '../../components/MotionDiv'
 import ContactForm from '@/components/ContactForm'
 import FaqAccordion from '@/components/FaqAccordion'
 import SubInfo from '@/components/SubInfo'
-import { client } from '@/sanity/client'
+import { client } from '@/sanity/lib/client'
 
 const query = `*[_type == "faq"] | order(orderRank asc) {
     _id,

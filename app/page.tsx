@@ -1,9 +1,9 @@
 import Ava from '../components/Ava'
 import MotionDiv from '../components/MotionDiv'
 import LinkButton from '../components/LinkButton'
-import CaseStudySection from '../components/CaseStudySection'
+import ProjectSection from '../components/ProjectsSection'
 import AboutImage from '../components/AboutImage'
-import { client } from '../sanity/client'
+import { client } from '../sanity/lib/client'
 import A from '../components/A'
 
 const query = `*[_type == "projects" && featured == true] | order(orderRank asc) {
@@ -14,7 +14,7 @@ const query = `*[_type == "projects" && featured == true] | order(orderRank asc)
 }`
 
 export default async function Home() {
-  const caseStudies = await client.fetch(query)
+  const projects = await client.fetch(query)
 
   return (
     <main>
@@ -50,25 +50,25 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Case Study Sections */}
-      <CaseStudySection
-        title={caseStudies[0].title}
-        description={caseStudies[0].description}
-        link={`/case-study/${caseStudies[0].slug.current}`}
+      {/* Projects Sections */}
+      <ProjectSection
+        title={projects[0].title}
+        description={projects[0].description}
+        link={`/projects/${projects[0].slug.current}`}
         video="/cs1.webm"
         loopStart={3.8}
       />
-      <CaseStudySection
+      <ProjectSection
         variant="type B"
-        title={caseStudies[1].title}
-        description={caseStudies[1].description}
-        link={`/case-study/${caseStudies[1].slug.current}`}
+        title={projects[1].title}
+        description={projects[1].description}
+        link={`/projects/${projects[1].slug.current}`}
         video="/cs2.webm"
       />
-      <CaseStudySection
-        title={caseStudies[2].title}
-        description={caseStudies[2].description}
-        link={`/case-study/${caseStudies[2].slug.current}`}
+      <ProjectSection
+        title={projects[2].title}
+        description={projects[2].description}
+        link={`/projects/${projects[2].slug.current}`}
         video="/cs3.webm"
         loopStart={2.4}
       />

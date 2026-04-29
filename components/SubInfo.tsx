@@ -1,20 +1,27 @@
 interface SubInfoProps {
     title: string;
+    variant?: keyof typeof variantSubInfo;
     subtitle: string;
     styles?: string;
 }
 
+const variantSubInfo = {
+    default: "p-5 sm:p-6 border border-(--divider)",
+    plain: "p-0",
+}
+
 const SubInfo = ({
     title,
+    variant = "default",
     subtitle,
     styles = ""
 }: SubInfoProps) => {
     const isExternal = /^(https?:)?\/\//.test(subtitle);
 
     return (
-        <dl className={`flex flex-col gap-2 p-5 sm:p-6 justify-center flex-1 border border-(--divider) ${styles}`}>
+        <dl className={`flex flex-col gap-1 justify-center flex-1 ${variantSubInfo[variant]} ${styles}`}>
 
-            <dt className="tag">{title}</dt>
+            <dt className="btn-text text-(--gray)">{title}</dt>
 
             {isExternal ? (
                 <a

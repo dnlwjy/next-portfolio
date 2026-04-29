@@ -1,5 +1,5 @@
 import { PortableTextComponents } from '@portabletext/react';
-import { urlFor } from "@/sanity/image";
+import { urlFor } from "@/sanity/lib/image";
 import A from '../components/A'
 
 const serializers: PortableTextComponents = {
@@ -9,7 +9,7 @@ const serializers: PortableTextComponents = {
     h2: ({ children }) => <h2 className='mt-12 mb-4'>{children}</h2>,
     h3: ({ children }) => <h3>{children}</h3>,
     blockquote: ({ children }) => (
-      <blockquote className="my-6 pl-4 py-3 border-l-4 font-inter text-[20px] border-darkgray bg-white/2 text-white">
+      <blockquote className="my-8 pl-4 py-4 border-l-4 text-[20px] border-(--gray) text-(--white)">
         {children}
       </blockquote>
     ),
@@ -18,7 +18,7 @@ const serializers: PortableTextComponents = {
     image: ({ value }) => {
       return (
         <img
-          src={urlFor(value).url()}
+          src={urlFor(value).width(1600).format("webp").url()}
           alt={value.alt}
           className="w-full h-auto object-cover my-4 border border-(--divider)"
         />
