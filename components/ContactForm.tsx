@@ -5,6 +5,8 @@ import { useTheme } from "@/context/ThemeProvider"
 import Button from './Button'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { Contact } from './IconLibrary'
+import { contactFormSchema, type ContactApiResponse } from '@/lib/contact/schema'
+import { envPublic } from '@/lib/env.public'
 
 type FormState = {
     name: string;
@@ -18,17 +20,18 @@ type StatusType = 'idle' | 'sending' | 'success' | 'error'
 function logicSubmitButton(a: StatusType) {
     if (a === 'sending') return 'Sending...'
     if (a === 'success') return 'Sent !'
-    if (a === 'error') return 'Something went wrong. Please try again.'
+    if (a === 'error') return 'Please check your input and try again.'
     return 'Send Message'
 }
 
-const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string
+const RECAPTCHA_SITE_KEY = envPublic.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
 
 const wrapperStyles = "flex flex-col gap-2"
 
 const ContactForm = ({ styles = "" }: { styles?: string }) => {
     const [form, setForm] = useState<FormState>({ name: '', email: '', message: '', recaptcha: '' })
     const [status, setStatus] = useState<StatusType>('idle')
+    const [feedback, setFeedback] = useState<string>('')
     const recaptchaRef = useRef<ReCAPTCHA>(null)
     const { theme } = useTheme()
 
@@ -42,27 +45,38 @@ const ContactForm = ({ styles = "" }: { styles?: string }) => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        setStatus('sending')
+        setFeedback('')
 
-        if (!form.recaptcha) {
+        const parsed = contactFormSchema.safeParse(form)
+        if (!parsed.success) {
             setStatus('error')
+            setFeedback(parsed.error.issues[0]?.message ?? 'Invalid input.')
             return
         }
+
+        setStatus('sending')
 
         try {
             const res = await fetch('/api/contact', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(form),
+                body: JSON.stringify(parsed.data),
             })
+            const data = (await res.json()) as ContactApiResponse
 
-            if (!res.ok) throw new Error()
+            if (!res.ok || !data.success) {
+                setStatus('error')
+                setFeedback(data.message || 'Something went wrong. Please try again.')
+                return
+            }
 
             setStatus('success')
+            setFeedback(data.message)
             setForm({ name: '', email: '', message: '', recaptcha: '' })
             recaptchaRef.current?.reset()
         } catch {
             setStatus('error')
+            setFeedback('Connection issue detected. Please try again shortly.')
         }
     }
 
@@ -110,7 +124,7 @@ const ContactForm = ({ styles = "" }: { styles?: string }) => {
                 <textarea
                     id="contact-message"
                     name="message"
-                    placeholder="I want to talk about..."
+                    placeholder="Tell me about your needs (minimum 50 characters)..."
                     value={form.message}
                     onChange={handleChange}
                     required
@@ -118,6 +132,7 @@ const ContactForm = ({ styles = "" }: { styles?: string }) => {
                     aria-label="Your message"
                     aria-required="true"
                 />
+                <small className="text-(--gray)">Message must be between 50 and 500 characters.</small>
             </div>
             {/* --- reCAPTCHA --- */}
             <div className="flex justify-start mt-4">
@@ -129,6 +144,14 @@ const ContactForm = ({ styles = "" }: { styles?: string }) => {
                     onChange={handleRecaptcha}
                 />
             </div>
+            {feedback ? (
+                <p
+                    className={`text-sm ${status === 'success' ? 'text-green-400' : 'text-red-400'}`}
+                    aria-live="polite"
+                >
+                    {feedback}
+                </p>
+            ) : null}
             <Button
                 title={logicSubmitButton(status)}
                 additionalHoverLogic={status === "sending" || status === "success"}

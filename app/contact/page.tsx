@@ -10,8 +10,14 @@ const query = `*[_type == "faq"] | order(orderRank asc) {
     answer,
 }`
 
+type FaqItem = {
+    _id: string
+    question: string
+    answer: string
+}
+
 export default async function Contact() {
-    const faq = await client.fetch(query)
+    const faq = await client.fetch<FaqItem[]>(query)
 
     return (
         <main>
@@ -55,7 +61,7 @@ export default async function Contact() {
                 >
                     <h2>Frequently Asked Questions</h2>
                     <div className="flex flex-col gap-2 w-full">
-                        {faq.map((e: any) => (
+                        {faq.map((e) => (
                             <FaqAccordion key={e._id} Q={e.question} A={e.answer} />
                         ))}
                     </div>
