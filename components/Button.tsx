@@ -53,7 +53,7 @@ const Button = ({
         >
             <span className={`absolute bottom-0 right-0 ${variantButton[variant].hover} ${buttonHover || additionalHoverLogic ? "w-full h-full rounded-none" : "w-0 h-0 rounded-[100px] rounded-br-none"} transition-all duration-600 ease-in-out`} />
 
-            {Icon && <Icon size={20} styles={`text-white mix-blend-difference ${variant === "disabled" ? "opacity-40" : ""}`} />}
+            {Icon && <Icon size={20} styles={`text-white mix-blend-difference ${variant === "disabled" ? "opacity-30" : ""}`} />}
             <span className={`btn-text text-white mix-blend-difference ${variant === "disabled" ? "opacity-50" : ""}`}>{title}</span>
         </button>
     )
