@@ -1,24 +1,33 @@
 'use client'
 
 import { useState } from 'react'
+import { IconProps } from './IconLibrary'
+
+type IconType = React.ElementType<IconProps>
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     title: string,
-    variant?: keyof typeof variantButton;
+    variant?: keyof typeof variantButton,
     // for submit button in ContactForm, to keep the hover effect on hold while sending or after success
-    additionalHoverLogic?: boolean;
-    click?: () => void;
-    icon?: React.ReactNode;
+    additionalHoverLogic?: boolean,
+    click?: () => void,
+    icon?: IconType,
     styles?: string,
 }
 
 const variantButton = {
     "primary": {
         base: "bg-(--white)",
-        hover: "bg-(--black)/90"},
+        hover: "bg-(--black)/90"
+    },
     "secondary": {
         base: "bg-(--divider)",
-        hover: "bg-(--black)/50"},
+        hover: "bg-(--black)/50"
+    },
+    "disabled": {
+        base: "bg-(--divider)/40 cursor-not-allowed",
+        hover: "",
+    }
 }
 
 const Button = ({
@@ -26,7 +35,7 @@ const Button = ({
     variant = "primary",
     additionalHoverLogic,
     click,
-    icon,
+    icon: Icon,
     styles,
 }: ButtonProps) => {
     const [buttonHover, setButtonHover] = useState(false)
@@ -34,15 +43,18 @@ const Button = ({
     return (
         <button
             onClick={click}
+            disabled={variant === "disabled"}
             onMouseEnter={() => setButtonHover(true)}
             onMouseLeave={() => setButtonHover(false)}
             className={`
-                    relative ${variantButton[variant].base} flex gap-4 items-center justify-center px-6 h-12 cursor-pointer
-                    [clip-path:polygon(0_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%)] ${styles}`}
+                    relative flex gap-3 items-center justify-center px-6 h-12 ${styles}
+                    ${variantButton[variant].base} ${variant === "disabled" ? "cursor-not-allowed" : "cursor-pointer"}
+                    [clip-path:polygon(0_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%)]`}
         >
             <span className={`absolute bottom-0 right-0 ${variantButton[variant].hover} ${buttonHover || additionalHoverLogic ? "w-full h-full rounded-none" : "w-0 h-0 rounded-[100px] rounded-br-none"} transition-all duration-600 ease-in-out`} />
-            {icon && <span className="w-5 h-5 flex items-center justify-center">{icon}</span>}
-            <span className="btn-text text-white mix-blend-difference">{title}</span>
+
+            {Icon && <Icon size={20} styles={`text-white mix-blend-difference ${variant === "disabled" ? "opacity-40" : ""}`} />}
+            <span className={`btn-text text-white mix-blend-difference ${variant === "disabled" ? "opacity-50" : ""}`}>{title}</span>
         </button>
     )
 }

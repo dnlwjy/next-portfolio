@@ -4,6 +4,7 @@ import { useState, useRef } from 'react'
 import { useTheme } from "@/context/ThemeProvider"
 import Button from './Button'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { Contact } from './IconLibrary'
 
 type FormState = {
     name: string;
@@ -138,6 +139,7 @@ const ContactForm = ({ styles = "" }: { styles?: string }) => {
                     [clip-path:polygon(0_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%)]`}
                 aria-label={logicSubmitButton(status)}
                 aria-live="polite"
+                icon={Contact}
             />
         </form>
     )
