@@ -46,6 +46,9 @@ export const AllVariants = {
       <Button title="Primary" variant="primary" icon={Home} {...args} />
       <Button title="Secondary" variant="secondary" icon={Home} {...args} />
       <Button title="Disabled" variant="disabled" icon={Home} {...args} />
+      <Button icon={Home} styles="w-12 h-12" {...args} />
+      <Button icon={Home} variant="secondary" styles="w-12 h-12" {...args} />
+      <Button icon={Home} variant="disabled" styles="w-12 h-12" {...args} />
     </div>
   ),
   args: {},

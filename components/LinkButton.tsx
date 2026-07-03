@@ -33,6 +33,7 @@ const LinkButton = ({
             return (
                 <Link
                     href={link}
+                    prefetch={false}
                     className={wrapperStyles}
                 >
                     {CONTENT}

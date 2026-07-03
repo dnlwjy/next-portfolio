@@ -6,7 +6,7 @@ import { IconProps } from './IconLibrary'
 type IconType = React.ElementType<IconProps>
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    title: string,
+    title?: string,
     variant?: keyof typeof variantButton,
     // for submit button in ContactForm, to keep the hover effect on hold while sending or after success
     additionalHoverLogic?: boolean,
@@ -47,7 +47,7 @@ const Button = ({
             onMouseEnter={() => setButtonHover(true)}
             onMouseLeave={() => setButtonHover(false)}
             className={`
-                    relative flex gap-3 items-center justify-center px-8 h-12 ${styles}
+                    relative flex  items-center justify-center ${title ? 'gap-3 px-8 h-12' : ''} ${styles}
                     ${variantButton[variant].base} ${variant === "disabled" ? "cursor-not-allowed" : "cursor-pointer"}
                     [clip-path:polygon(0_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%)]`}
         >
