@@ -96,7 +96,7 @@ export default async function CaseStudyDetail({ params }: { params: Promise<{ sl
                     <h1>{caseStudy.title}</h1>
                 </MotionDiv>
 
-                <div className="flex md:flex-row flex-col md:gap-40 gap-24">
+                <div className="flex md:flex-row flex-col md:gap-40 gap-24 w-full">
                     <MotionDiv del={0.5} styles="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 h-fit md:max-w-[360px] w-full gap-6">
                         <SubInfo title="Role" subtitle={caseStudy.role} />
                         <SubInfo title="Client" subtitle={caseStudy.client} />
