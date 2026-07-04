@@ -26,7 +26,7 @@ const preview: Preview = {
     (Story) => (
       <LazyMotion features={domAnimation}>
         <MotionConfig reducedMotion="user">
-          <ThemeProvider initialTheme="dark">
+          <ThemeProvider>
             <main id="storybook-root" className="min-h-screen flex items-center justify-center">
               <ToggleTheme styles="fixed top-8 z-50 inset-x-0 mx-auto" />
               <Story />

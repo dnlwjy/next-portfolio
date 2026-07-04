@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import MotionDiv from '../../components/MotionDiv'
+import MotionElement from '../../components/MotionElement'
 import ContactForm from '@/components/ContactForm'
 import SubInfo from '@/components/SubInfo'
 import { IG, LI, Github } from "../../components/IconLibrary";
@@ -29,40 +29,43 @@ export const metadata: Metadata = {
 export default function Contact() {
 
     return (
-        <main>
+        <>
             <section id="contact" className="sm">
 
-                <MotionDiv variant="up" styles="flex flex-col gap-4 items-center">
-                    <h1>
-                        <span className="text-(--gray)">Let’s Work</span>
-                        <br />
-                        Together
-                    </h1>
-                </MotionDiv>
-
                 <div className="flex md:flex-row flex-col md:gap-40 gap-24 w-full">
-                    <MotionDiv del={0.5} styles="flex-1">
+                    <MotionElement del={0.5} styles="flex flex-col flex-1 gap-16">
+                        <h1 className="text-start">
+                            <span className="text-(--gray)">Let’s Work</span>
+                            <br />
+                            Together
+                        </h1>
                         <ContactForm styles="w-full" />
-                    </MotionDiv>
-                    <MotionDiv del={0.7} variant="right" styles="flex flex-col h-fit md:max-w-[360px] w-full gap-6 justify-start">
-                        <SubInfo title="Email" subtitle="wijayadaniel19@gmail.com" />
-                        <SubInfo title="Location" subtitle="Jakarta, Indonesia" />
-                        <span className="flex gap-6 items-start pt-2">
+                    </MotionElement>
+                    <MotionElement as="aside" del={0.7} variant="right" styles="flex flex-col h-fit md:max-w-90 w-full gap-6 justify-start">
+                        <dl className="flex flex-col gap-6">
+                            <SubInfo title="Email" subtitle="wijayadaniel19@gmail.com" />
+                            <SubInfo title="Location" subtitle="Jakarta, Indonesia" />
+                            <SubInfo title="WhatsApp" subtitle="+628111388895" />
+                        </dl>
+
+                        <ul className="flex gap-6 items-start pt-2">
                             {socialMedia.map((e) => (
-                                <a
-                                    key={e.name}
-                                    href={e.link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="hover:text-(--white) transition-colors duration-300"
-                                >
-                                    {e.icon}
-                                </a>
+                                <li key={e.name}>
+                                    <a
+                                        href={e.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="hover:text-(--white) transition-colors duration-300"
+                                        aria-label={e.name}
+                                    >
+                                        {e.icon}
+                                    </a>
+                                </li>
                             ))}
-                        </span>
-                    </MotionDiv>
+                        </ul>
+                    </MotionElement>
                 </div>
             </section>
-        </main>
+        </>
     )
 }

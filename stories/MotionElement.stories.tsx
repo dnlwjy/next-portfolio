@@ -1,12 +1,12 @@
 import "../app/globals.css";
 import type { Meta, StoryObj } from "@storybook/react";
-import MotionDiv from "../components/MotionDiv";
+import MotionElement from "../components/MotionElement";
 
 const wrapperStyles = "p-4 md:p-6 bg-(--divider)"
 
-const meta: Meta<typeof MotionDiv> = {
-  title: "Components/MotionDiv",
-  component: MotionDiv,
+const meta: Meta<typeof MotionElement> = {
+  title: "Components/MotionElement",
+  component: MotionElement,
   argTypes: {
     variant: {
       control: "select",
@@ -21,7 +21,7 @@ const meta: Meta<typeof MotionDiv> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof MotionDiv>;
+type Story = StoryObj<typeof MotionElement>;
 
 const SampleContent = () => (
   <div className={wrapperStyles}>
@@ -62,11 +62,32 @@ export const AllVariants = {
   render: () => (
     <div className="grid grid-cols-2 gap-4 sm:gap-6 p-8 w-full max-w-150">
       {(["up", "down", "left", "right"] as const).map((variant) => (
-        <MotionDiv key={variant} variant={variant} styles={wrapperStyles}>
+        <MotionElement key={variant} variant={variant} styles={wrapperStyles}>
             <p className="tag text-mb-1">variant:</p>
             <span className="text-(--white)">({variant})</span>
-        </MotionDiv>
+        </MotionElement>
       ))}
     </div>
+  ),
+};
+
+export const HTMLElement: Story = {
+  args: {
+    as: "section",
+    variant: "up",
+  },
+  argTypes: {
+    as: {
+      control: "select",
+      options: ["div", "section", "article", "aside", "header", "footer", "main", "nav", "ul", "dl", "span"],
+    },
+  },
+  render: (args) => (
+    <MotionElement {...args}>
+      <div className={wrapperStyles}>
+        <p className="tag text-(--gray)">rendered this as:</p>
+        <span className="text-(--white)">&lt;{args.as}&gt;</span>
+      </div>
+    </MotionElement>
   ),
 };

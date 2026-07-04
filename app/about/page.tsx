@@ -1,4 +1,4 @@
-import MotionDiv from '../../components/MotionDiv';
+import MotionElement from '../../components/MotionElement';
 import A from '../../components/A';
 import AboutImage from './AboutImage';
 import type { Metadata } from "next";
@@ -37,20 +37,20 @@ export default async function About() {
     const about = await client.fetch<About>(query)
 
     return (
-        <main>
+        <>
             <section id="about-me" className="sm">
 
-                <MotionDiv variant="up" styles="flex flex-col gap-8 items-center w-full max-w-280">
+                <MotionElement variant="up" styles="flex flex-col gap-8 items-center w-full max-w-280">
                     <div className="flex flex-col gap-4 items-center">
                         <span className="btn-text text-(--gray)">About me</span>
                         <h2>{about.heading}</h2>
                     </div>
-                    <p className="text-center max-w-240">Over the past {YEARS_OF_EXPERIENCE} years, I’ve worked with startups and agencies from the U.S., Canada, New Zealand, and beyond. I'm currently open to full-time Frontend Engineer role in Singapore or Australia, feel free to check out <A title="my resume" link="https://drive.google.com/file/d/1g2-1tF6l2J3GOTJN6D0DE1R_SZnUv4wU/view?usp=sharing" /> or <A title="my LinkedIn" link="https://www.linkedin.com/in/dnlwjy/" /> to learn more about me.</p>
-                </MotionDiv>
+                    <p className="text-center max-w-240">With a solid background in UI/UX design, I bridge the gap between design and development while understanding business context, user-centric thinking, scalable systems, and AI-powered solutions. In my spare time, I'm busy tinkering with <A title="side projects" link="/builds" /> and hitting the gym.</p>
+                </MotionElement>
 
-                <MotionDiv variant="up" del={0.5} styles="w-full"><AboutImage /></MotionDiv>
+                <MotionElement variant="up" del={0.5} styles="w-full"><AboutImage /></MotionElement>
 
-                <MotionDiv variant="up" del={0.5} styles="flex flex-wrap gap-x-40 gap-y-16 w-full justify-center">
+                <MotionElement variant="up" del={0.5} styles="flex flex-wrap gap-x-40 gap-y-16 w-full justify-center">
                     {about.skills?.map((e) => (
                         <div key={e._key} className="flex flex-col gap-4 items-center w-100">
                             <span className="btn-text text-(--gray)">
@@ -67,20 +67,20 @@ export default async function About() {
                             </div>
                         </div>
                     ))}
-                </MotionDiv>
+                </MotionElement>
             </section>
 
             <section id="experience" className="sm py-0">
                 <Divider styles="w-full" />
-                <MotionDiv variant="up" del={0.5} styles={SUPPORT}>
+                <MotionElement variant="up" del={0.5} styles={SUPPORT}>
                     <div className="flex flex-col gap-4 max-w-280 items-center">
                         <span className="btn-text text-(--gray)">Experience</span>
                         <h2>Over {YEARS_OF_EXPERIENCE} years of experience</h2>
                     </div>
-                    <p className="text-center max-w-280">As a fresh graduate living in the post-COVID era, I am grateful to have worked with companies, agencies, and startups on both on-site and remote role.</p>
-                </MotionDiv>
+                    <p className="text-center max-w-280">As a fresh graduate living in the post-COVID era, I'm grateful enough to build connections from inside and outside home country. For more details, check out my <A title="LinkedIn page" link="https://www.linkedin.com/in/dnlwjy/" />.</p>
+                </MotionElement>
 
-                <MotionDiv variant="up" del={0.5} styles="flex flex-col gap-8 sm:gap-4 py-4 w-full">
+                <MotionElement variant="up" del={0.5} styles="flex flex-col gap-8 sm:gap-4 py-4 w-full">
                     {about.experiences?.map((e) => (
                         <div key={e._key} className="flex sm:flex-row flex-col text-center sm:text-start">
                             <div className="w-full">
@@ -96,20 +96,20 @@ export default async function About() {
                             <span className="w-full text-[18px]">{e.year}</span>
                         </div>
                     ))}
-                </MotionDiv>
+                </MotionElement>
             </section>
 
             <section id="clients" className="sm pt-32">
                 <Divider styles="w-full" />
-                <MotionDiv variant="up" del={0.5} styles={SUPPORT}>
+                <MotionElement variant="up" del={0.5} styles={SUPPORT}>
                     <div className="flex flex-col gap-4 max-w-280 items-center">
                         <span className="btn-text text-(--gray)">Clients</span>
                         <h2>Brands I’ve worked or partnered with...</h2>
                     </div>
-                    <p className="text-center max-w-280">Throughout my career, I’ve partnered with these brands, and more to come...</p>
-                </MotionDiv>
+                    <p className="text-center max-w-280">I've always loved partnering with amazing brands and companies around the world, and I can't wait to work with many more. If you're one of them, <A title="let's connect" link="/contact" />.</p>
+                </MotionElement>
 
-                <MotionDiv variant="up" del={0.5} styles="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 w-full justify-items-center">
+                <MotionElement variant="up" del={0.5} styles="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 w-full justify-items-center">
                     {about.clients?.map((e) => (
                         <div
                             key={e._key}
@@ -119,8 +119,8 @@ export default async function About() {
                             dangerouslySetInnerHTML={{ __html: e.svg ?? "" }}
                         />
                     ))}
-                </MotionDiv>
+                </MotionElement>
             </section>
-        </main>
+        </>
     );
 }

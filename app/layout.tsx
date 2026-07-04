@@ -66,7 +66,9 @@ export default async function RootLayout({
             >
               <Header styles="fixed top-6 inset-x-0 mx-auto z-50" />
               <ToggleTheme styles="fixed top-8 right-8 z-50 sm:flex hidden" />
-              {children}
+              <main>
+                {children}
+              </main>
               <Footer />
             </MotionConfig>
           </LazyMotion>

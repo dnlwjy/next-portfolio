@@ -1,4 +1,4 @@
-import MotionDiv from '../../../components/MotionDiv'
+import MotionElement from '../../../components/MotionElement'
 import SubInfo from '@/components/SubInfo'
 import { client } from '../../../sanity/lib/client'
 import { PortableText } from "@portabletext/react"
@@ -9,7 +9,6 @@ import { listStyles } from '../page'
 import type { Metadata } from "next";
 import { urlFor } from '../../../sanity/lib/image'
 import type { Projects } from '@/types/sanity.types'
-import Divider from '@/components/Divider'
 
 // 1. queries
 const query = `*[_type == "projects" && slug.current == $slug][0]{
@@ -49,32 +48,32 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     if (!data) return {}
 
     const image = data.coverImage
-    ? urlFor(data.coverImage).width(1200).height(630).url()
-    : "/og-default.jpg"
+        ? urlFor(data.coverImage).width(1200).height(630).url()
+        : "/og-default.jpg"
 
     return {
-    title: data.title,
-    description: data.description,
+        title: data.title,
+        description: data.description,
 
-    openGraph: {
-      title: data.title,
-      description: data.description,
-      type: "article",
-      images: [image],
-      url: `/case-study/${slug}`,
-    },
+        openGraph: {
+            title: data.title,
+            description: data.description,
+            type: "article",
+            images: [image],
+            url: `/case-study/${slug}`,
+        },
 
-    twitter: {
-      card: "summary_large_image",
-      title: data.title,
-      description: data.description,
-      images: [image],
-    },
+        twitter: {
+            card: "summary_large_image",
+            title: data.title,
+            description: data.description,
+            images: [image],
+        },
 
-    alternates: {
-      canonical: `/case-study/${slug}`,
-    },
-  }
+        alternates: {
+            canonical: `/case-study/${slug}`,
+        },
+    }
 }
 
 // 4. render
@@ -88,39 +87,37 @@ export default async function CaseStudyDetail({ params }: { params: Promise<{ sl
     }
 
     return (
-        <main>
+        <>
             <section id="case-study-brief" className="sm">
 
-                <MotionDiv variant="up" styles="flex flex-col gap-4 items-center">
+                <MotionElement variant="up" styles="flex flex-col gap-4 items-center">
                     <span className="btn-text text-(--gray)">Case Study</span>
                     <h1>{caseStudy.title}</h1>
-                </MotionDiv>
+                </MotionElement>
 
                 <div className="flex md:flex-row flex-col md:gap-40 gap-24 w-full">
-                    <MotionDiv del={0.5} styles="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 h-fit md:max-w-[360px] w-full gap-6">
+                    <MotionElement as="dl" del={0.5} styles="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 h-fit md:max-w-[360px] w-full gap-6">
                         <SubInfo title="Role" subtitle={caseStudy.role} />
                         <SubInfo title="Client" subtitle={caseStudy.client} />
                         <SubInfo title="Year" subtitle={caseStudy.year} />
                         <SubInfo title="Website" subtitle={caseStudy.website} />
-                    </MotionDiv>
-                    <MotionDiv del={0.7} variant="right" styles="flex-1">
+                    </MotionElement>
+                    <MotionElement del={0.7} variant="right" styles="flex-1">
                         <PortableText value={caseStudy.content} components={Serializers} />
-                    </MotionDiv>
+                    </MotionElement>
                 </div>
             </section>
 
-            <section id="case-study-documentation" className="sm py-0">
-                <MotionDiv variant="up">
+            <section id="case-study-documentation" className="sm">
+                <MotionElement variant="up">
                     <PortableText
                         value={caseStudy.documentation}
                         components={Serializers}
                     />
-                </MotionDiv>
+                </MotionElement>
             </section>
 
-            <Divider styles="pt-40"/>
-
-            <section id="more-case-studies" className="sm pt-40">
+            <section id="more-case-studies" className="sm">
                 <div className={listStyles}>
                     {moreCaseStudies.map((e: Projects) => (
                         <TitleCard
@@ -135,7 +132,6 @@ export default async function CaseStudyDetail({ params }: { params: Promise<{ sl
                     ))}
                 </div>
             </section>
-
-        </main>
+        </>
     );
 }

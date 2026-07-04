@@ -1,5 +1,5 @@
 import Ava from '../components/Ava'
-import MotionDiv from '../components/MotionDiv'
+import MotionElement from '../components/MotionElement'
 import LinkButton from '../components/LinkButton'
 import CaseStudySection from '../components/CaseStudySection'
 import AboutImage from '../components/AboutImage'
@@ -40,7 +40,7 @@ export default async function Home() {
 ])
 
   return (
-    <main>
+    <>
 
       {/* Hero Section */}
       <section id="hero" className="h-screen p-4">
@@ -48,7 +48,7 @@ export default async function Home() {
 
           <Ava />
 
-          <MotionDiv
+          <MotionElement
             del={0.5}
             variant="up"
             styles="flex flex-col gap-12 items-center z-10">
@@ -69,7 +69,7 @@ export default async function Home() {
                 link="/about"
               />
             </div>
-          </MotionDiv>
+          </MotionElement>
         </div>
       </section>
 
@@ -101,7 +101,7 @@ export default async function Home() {
 
       {/* About me */}
       <section id="about" className="md:flex-row flex-col max-w-480 md:items-start items-center mt-0 sm:-mt-16 md:mt-0">
-        <MotionDiv styles="relative w-full aspect-3/4 min-w-108 max-w-170">
+        <MotionElement styles="relative w-full aspect-3/4 min-w-108 max-w-170">
           <AboutImage />
           <div className="absolute z-10 inset-0 bg-[radial-gradient(farthest-side_at_center,#12121200_90%,var(--black)_100%)]" />
           <svg
@@ -110,15 +110,15 @@ export default async function Home() {
             viewBox="0 0 524 524">
             <path stroke="var(--divider)" d="M0 524 524 0M183.704 373l196-196" />
           </svg>
-        </MotionDiv>
+        </MotionElement>
 
-        <MotionDiv
+        <MotionElement
           variant='right'
           del={0.5}
           styles="w-full mt-10 max-w-120">
           <PortableText value={bio.about} components={Serializers} />
-        </MotionDiv>
+        </MotionElement>
       </section>
-    </main>
+    </>
   );
 }

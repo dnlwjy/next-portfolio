@@ -1,5 +1,5 @@
 import LinkButton from './LinkButton'
-import MotionDiv, { variantMotionDiv } from './MotionDiv'
+import MotionElement, { variantMotionElement } from './MotionElement'
 import Divider from './Divider'
 import type { Projects } from '@/types/sanity.types'
 
@@ -8,7 +8,7 @@ interface CaseStudyProps {
     desc: Projects['description']
     year?: Projects['year']
     link: string
-    variant?: keyof typeof variantMotionDiv
+    variant?: keyof typeof variantMotionElement
     longDivider?: boolean
     styles?: string
 }
@@ -22,7 +22,7 @@ export const TitleCard = ({
     longDivider = false,
     styles = "",
 }: CaseStudyProps) => (
-    <MotionDiv
+    <MotionElement
         variant={variant}
         styles={`flex flex-col gap-8 z-10 ${styles}`}
     >
@@ -33,7 +33,7 @@ export const TitleCard = ({
         </div>
 
         <LinkButton title="View Project" link={link} />
-    </MotionDiv>
+    </MotionElement>
 )
 
 export default TitleCard

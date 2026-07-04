@@ -1,4 +1,4 @@
-import MotionDiv from '../../components/MotionDiv'
+import MotionElement from '../../components/MotionElement'
 import { client } from '../../sanity/lib/client'
 import TitleCard from '../../components/TitleCard'
 import type { Projects } from '@/types/sanity.types'
@@ -34,17 +34,17 @@ export default async function CaseStudies() {
     const caseStudies = await client.fetch(query)
 
     return (
-        <main>
+        <>
             <section className="sm">
 
-                <MotionDiv variant="up" styles="flex flex-col gap-6 items-center w-full">
+                <MotionElement variant="up" styles="flex flex-col gap-6 items-center w-full">
                     <h1>
                         <span className="text-(--gray)">Archive of</span>
                         <br />
                         Case Studies
                     </h1>
                     <p className="text-center">{SUPPORT}</p>
-                </MotionDiv>
+                </MotionElement>
 
                 <div className={listStyles}>
                     {caseStudies.map((e: Projects) => (
@@ -61,6 +61,6 @@ export default async function CaseStudies() {
                 </div>
 
             </section>
-        </main>
+        </>
     )
 }

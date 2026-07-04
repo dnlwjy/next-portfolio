@@ -1,76 +1,130 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useCallback, useEffect, useRef } from "react"
 import type { ComponentType } from "react"
-import { m, useMotionValue, useSpring } from "framer-motion"
+import { m } from "framer-motion"
 
 const settings = {
-    damping: 100, // Damping: higher values are smoother
-    stiffness: 150, // Stiffness: higher values increase response speed
-    maxDistance: 2000, // Max distance for effect activation
+    maxDistance: 1300, // Max distance for effect activation
     intensity: 0.1, // Effect intensity: higher values = stronger effect
-}
-
-const springConfig = {
-    damping: settings.damping,
-    stiffness: settings.stiffness,
+    transitionDuration: 1500, // Transition duration in ms
+    transitionEase: "cubic-bezier(0.22, 1, 0.36, 1)",
 }
 
 export const withCursorFollow = <P extends object>(Component: ComponentType<P>): ComponentType<P> => {
     return (props: P) => {
-        const x = useMotionValue(0)
-        const y = useMotionValue(0)
-        const [componentRef, setComponentRef] = useState<HTMLDivElement | null>(
-            null
-        )
+        const componentRef = useRef<HTMLDivElement | null>(null)
         const isInView = useRef(false)
-        const springX = useSpring(x, springConfig)
-        const springY = useSpring(y, springConfig)
+        const centerRef = useRef({ x: 0, y: 0 })
+        const hasMeasureRef = useRef(false)
+        const pointerXRef = useRef(0)
+        const pointerYRef = useRef(0)
+        const needsMeasureRef = useRef(true)
+        const rafIdRef = useRef<number | null>(null)
+
+        const applyTransform = useCallback((x: number, y: number) => {
+            const node = componentRef.current
+            if (!node) return
+            node.style.transform = `translate3d(${x}px, ${y}px, 0)`
+        }, [])
+
+        const updateCenter = useCallback(() => {
+            const node = componentRef.current
+            if (!node) return
+            const rect = node.getBoundingClientRect()
+            centerRef.current = {
+                x: rect.left + rect.width / 2,
+                y: rect.top + rect.height / 2,
+            }
+            hasMeasureRef.current = true
+        }, [])
+
+        const applyOffset = useCallback(() => {
+            rafIdRef.current = null
+
+            if (needsMeasureRef.current) {
+                updateCenter()
+                needsMeasureRef.current = false
+            }
+
+            if (!isInView.current || !hasMeasureRef.current) {
+                applyTransform(0, 0)
+                return
+            }
+
+            const distanceX = pointerXRef.current - centerRef.current.x
+            const distanceY = pointerYRef.current - centerRef.current.y
+
+            if (
+                Math.abs(distanceX) < settings.maxDistance &&
+                Math.abs(distanceY) < settings.maxDistance
+            ) {
+                const proximityFactor =
+                    1 -
+                    Math.max(Math.abs(distanceX), Math.abs(distanceY)) /
+                        settings.maxDistance
+
+                applyTransform(
+                    distanceX * proximityFactor * settings.intensity,
+                    distanceY * proximityFactor * settings.intensity
+                )
+                return
+            }
+
+            applyTransform(0, 0)
+        }, [applyTransform, updateCenter])
+
+        const scheduleApplyOffset = useCallback(() => {
+            if (rafIdRef.current !== null) return
+            rafIdRef.current = requestAnimationFrame(applyOffset)
+        }, [applyOffset])
 
         useEffect(() => {
-            const calculateDistance = (e: MouseEvent) => {
-                if (componentRef) {
-                    const rect = componentRef.getBoundingClientRect()
-                    const centerX = rect.left + rect.width / 2
-                    const centerY = rect.top + rect.height / 2
-                    const distanceX = e.clientX - centerX
-                    const distanceY = e.clientY - centerY
-
-                    if (
-                        Math.abs(distanceX) < settings.maxDistance &&
-                        Math.abs(distanceY) < settings.maxDistance
-                    ) {
-                        const proximityFactor =
-                            1 -
-                            Math.max(Math.abs(distanceX), Math.abs(distanceY)) /
-                                settings.maxDistance
-                        x.set(distanceX * proximityFactor * settings.intensity)
-                        y.set(distanceY * proximityFactor * settings.intensity)
-                    } else {
-                        x.set(0)
-                        y.set(0)
-                    }
-                }
-            }
-
             const handleMouseMove = (e: MouseEvent) => {
                 if (isInView.current) {
-                    calculateDistance(e)
+                    pointerXRef.current = e.clientX
+                    pointerYRef.current = e.clientY
+                    scheduleApplyOffset()
                 }
             }
 
-            document.addEventListener("mousemove", handleMouseMove)
+            const handleViewportChange = () => {
+                if (!isInView.current) return
+                needsMeasureRef.current = true
+                scheduleApplyOffset()
+            }
+
+            window.addEventListener("mousemove", handleMouseMove, { passive: true })
+            window.addEventListener("scroll", handleViewportChange, { passive: true })
+            window.addEventListener("resize", handleViewportChange)
 
             return () => {
-                document.removeEventListener("mousemove", handleMouseMove)
+                window.removeEventListener("mousemove", handleMouseMove)
+                window.removeEventListener("scroll", handleViewportChange)
+                window.removeEventListener("resize", handleViewportChange)
+                if (rafIdRef.current !== null) {
+                    cancelAnimationFrame(rafIdRef.current)
+                }
             }
-        }, [componentRef, x, y])
+        }, [scheduleApplyOffset])
+
+        useEffect(() => {
+            const node = componentRef.current
+            if (!node) return
+            node.style.transition = `transform ${settings.transitionDuration}ms ${settings.transitionEase}`
+        }, [])
 
         useEffect(() => {
             const observer = new IntersectionObserver(
                 (entries) => {
                     entries.forEach((entry) => {
                         isInView.current = entry.isIntersecting
+                        if (entry.isIntersecting) {
+                            needsMeasureRef.current = true
+                            scheduleApplyOffset()
+                        } else {
+                            applyTransform(0, 0)
+                        }
                     })
                 },
                 {
@@ -78,23 +132,30 @@ export const withCursorFollow = <P extends object>(Component: ComponentType<P>):
                 }
             )
 
-            if (componentRef) {
-                observer.observe(componentRef)
+            const node = componentRef.current
+            if (node) {
+                observer.observe(node)
+                needsMeasureRef.current = true
             }
 
             return () => {
-                if (componentRef) {
-                    observer.unobserve(componentRef)
+                observer.disconnect()
+            }
+        }, [applyTransform, scheduleApplyOffset])
+
+        useEffect(() => {
+            return () => {
+                if (rafIdRef.current !== null) {
+                    cancelAnimationFrame(rafIdRef.current)
                 }
             }
-        }, [componentRef])
+        }, [])
 
         return (
             <m.div
-                ref={setComponentRef}
+                ref={componentRef}
                 style={{
-                    x: springX,
-                    y: springY,
+                    willChange: "transform",
                     zIndex: (props as any).zIndex ?? 2, // Default z-index to 2
                 }}
             >
