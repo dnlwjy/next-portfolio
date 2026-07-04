@@ -22,40 +22,42 @@ export type About = {
   _updatedAt: string;
   _rev: string;
   heading?: string;
-  about?: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?:
-          | "normal"
-          | "h1"
-          | "h2"
-          | "h3"
-          | "h4"
-          | "h5"
-          | "h6"
-          | "blockquote";
-        listItem?: "bullet" | "number";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
-        _key: string;
-      }
-    | {
-        text?: string;
-        href?: string;
-        _type: "link";
-        _key: string;
-      }
-  >;
+  subheading?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  about?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
   experiences?: Array<{
     company?: string;
     url?: string;
@@ -63,14 +65,47 @@ export type About = {
     year?: string;
     _key: string;
   }>;
-  skills?: Array<{
-    category?: "tools" | "stacks";
-    items?: Array<string>;
-    _key: string;
-  }>;
+  skills?: {
+    tools?: Array<string>;
+    stacks?: Array<string>;
+  };
   clients?: Array<{
     name?: string;
     svg?: string;
+    _key: string;
+  }>;
+  software: Array<{
+    title: string;
+    link?: string;
+    description: string;
+    _key: string;
+  }>;
+  hardware: Array<{
+    title: string;
+    link?: string;
+    description: string;
+    _key: string;
+  }>;
+  funFacts: Array<{
+    title: string;
+    description: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
     _key: string;
   }>;
 };

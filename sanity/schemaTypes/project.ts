@@ -1,5 +1,6 @@
 import { defineType } from "sanity";
 import { orderRankField, orderRankOrdering } from "@sanity/orderable-document-list";
+import { LINK_EXTERNAL_ONLY } from "./about";
 
 export const caseStudy = defineType({
     name: "projects",
@@ -35,19 +36,35 @@ export const caseStudy = defineType({
             name: "website",
             title: "Website",
             type: "url",
-            validation: (Rule) => Rule.uri({ scheme: ['http', 'https'] }).error("Only valid HTTP or HTTPS URLs are allowed"),
+            validation: LINK_EXTERNAL_ONLY,
         },
 
         { name: "description", title: "Description", type: "text", validation: (Rule) => Rule.required() },
         { name: "coverImage", title: "Cover Image", type: "image", description: "Used for social media preview (recommended 1200x630)" },
         {
             name: "content", title: "Content", type: "array", of: [
-                { type: "block" },
                 {
-                    type: "object", name: "link", fields: [
-                        { name: "text", type: "string", title: "Link Text" },
-                        { name: "href", type: "url", title: "URL" },
-                    ],
+                    type: "block",
+                    marks: {
+                        annotations: [
+                            {
+                                name: "link",
+                                title: "Link",
+                                type: "object",
+                                fields: [
+                                    {
+                                        name: "href",
+                                        title: "URL",
+                                        type: "url",
+                                        validation: (Rule) =>
+                                            Rule.uri({
+                                                allowRelative: true,
+                                            }),
+                                    },
+                                ],
+                            },
+                        ],
+                    },
                 },
             ],
         },

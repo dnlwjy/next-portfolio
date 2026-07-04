@@ -1,5 +1,8 @@
 import { defineType } from "sanity";
 
+export const LINK_EXTERNAL_ONLY = (Rule: any) =>
+    Rule.uri({ scheme: ['http', 'https'] }).error("Use a valid HTTP/HTTPS URL")
+
 export const about = defineType({
     name: "about",
     title: "Daniel Wijaya",
@@ -8,18 +11,70 @@ export const about = defineType({
         {
             name: "heading",
             title: "Heading",
+            description: "Displayed at about page and site metadata",
             type: "text",
-            description: "Displayed at the about page, and could be used as a site metadata",
         },
 
         {
-            name: "about", title: "About", type: "array", description: "Displayed at the home page", of: [
-                { type: "block" },
+            name: "subheading",
+            title: "Subheading",
+            description: "Displayed at about page",
+            type: "array",
+            of: [
                 {
-                    type: "object", name: "link", fields: [
-                        { name: "text", type: "string", title: "Link Text" },
-                        { name: "href", type: "url", title: "URL" },
-                    ],
+                    type: "block",
+                    marks: {
+                        annotations: [
+                            {
+                                name: "link",
+                                title: "Link",
+                                type: "object",
+                                fields: [
+                                    {
+                                        name: "href",
+                                        title: "URL",
+                                        type: "url",
+                                        validation: (Rule) =>
+                                            Rule.uri({
+                                                allowRelative: true,
+                                            }),
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                },
+            ],
+        },
+
+        {
+            name: "about",
+            title: "Biography",
+            description: "Displayed at home page",
+            type: "array",
+            of: [
+                {
+                    type: "block",
+                    marks: {
+                        annotations: [
+                            {
+                                name: "link",
+                                title: "Link",
+                                type: "object",
+                                fields: [
+                                    {
+                                        name: "href",
+                                        title: "URL",
+                                        type: "url",
+                                        validation: (Rule) =>
+                                            Rule.uri({
+                                                allowRelative: true,
+                                            }),
+                                    },
+                                ],
+                            },
+                        ],
+                    },
                 },
             ],
         },
@@ -33,7 +88,7 @@ export const about = defineType({
                     type: "object",
                     fields: [
                         { name: "company", title: "Company", type: "string" },
-                        { name: "url", title: "Company URL", type: "url", validation: (Rule) => Rule.uri({ scheme: ['http', 'https'] }).error("Only valid HTTP or HTTPS URLs are allowed") },
+                        { name: "url", title: "Company URL", type: "url", validation: LINK_EXTERNAL_ONLY },
                         { name: "role", title: "Role", type: "string" },
                         { name: "year", title: "Year", type: "string" },
                     ],
@@ -44,35 +99,19 @@ export const about = defineType({
         {
             name: "skills",
             title: "Skills",
-            type: "array",
-            of: [
+            type: "object",
+            fields: [
                 {
-                    type: "object",
-                    fields: [
-                        {
-                            name: "category",
-                            title: "Category",
-                            type: "string",
-                            options: {
-                                list: [
-                                    { title: "Tools", value: "tools" },
-                                    { title: "Stacks", value: "stacks" },
-                                ],
-                            },
-                            validation: (Rule) => Rule.required(),
-                        },
-                        {
-                            name: "items",
-                            title: "Items",
-                            type: "array",
-                            of: [{ type: "string" }],
-                        },
-                    ],
-                    preview: {
-                        select: {
-                            title: "category",
-                        },
-                    },
+                    name: "tools",
+                    title: "Tools",
+                    type: "array",
+                    of: [{ type: "string" }],
+                },
+                {
+                    name: "stacks",
+                    title: "Stacks",
+                    type: "array",
+                    of: [{ type: "string" }],
                 },
             ],
         },
@@ -96,7 +135,145 @@ export const about = defineType({
                     ],
                 },
             ],
-        }
+        },
+
+        {
+            name: "software",
+            title: "Software",
+            type: "array",
+            of: [
+                {
+                    type: "object",
+                    fields: [
+                        {
+                            name: "title",
+                            title: "Title",
+                            type: "string",
+                            validation: (Rule) => Rule.required(),
+                        },
+                        {
+                            name: "link",
+                            title: "Link",
+                            type: "url",
+                            validation: LINK_EXTERNAL_ONLY,
+                        },
+                        {
+                            name: "description",
+                            title: "Description",
+                            type: "text",
+                            validation: (Rule) => Rule.required().custom((value) => {
+                                    if (!value || typeof value !== "string") return true;
+                                    const wordCount = value.trim().split(/\s+/).length;
+                                    return wordCount <= 24 || `Description must be 24 words or fewer (currently ${wordCount} words)`;
+                                }),
+                        },
+                    ],
+                    preview: {
+                        select: {
+                            title: "title",
+                            subtitle: "description",
+                        },
+                    },
+                },
+            ],
+        },
+
+        {
+            name: "hardware",
+            title: "Hardware",
+            type: "array",
+            of: [
+                {
+                    type: "object",
+                    fields: [
+                        {
+                            name: "title",
+                            title: "Title",
+                            type: "string",
+                            validation: (Rule) => Rule.required(),
+                        },
+                        {
+                            name: "link",
+                            title: "Link",
+                            type: "url",
+                            validation: LINK_EXTERNAL_ONLY,
+                        },
+                        {
+                            name: "description",
+                            title: "Description",
+                            type: "text",
+                            validation: (Rule) => Rule.required().custom((value) => {
+                                    if (!value || typeof value !== "string") return true;
+                                    const wordCount = value.trim().split(/\s+/).length;
+                                    return wordCount <= 24 || `Description must be 24 words or fewer (currently ${wordCount} words)`;
+                                }),
+                        },
+                    ],
+                    preview: {
+                        select: {
+                            title: "title",
+                            subtitle: "description",
+                        },
+                    },
+                },
+            ],
+        },
+
+        {
+            name: "funFacts",
+            title: "Fun Facts",
+            type: "array",
+            of: [
+                {
+                    type: "object",
+                    fields: [
+                        {
+                            name: "title",
+                            title: "Title",
+                            type: "string",
+                            validation: (Rule) => Rule.required(),
+                        },
+                        {
+                            name: "description",
+                            title: "Description",
+                            validation: (Rule) => Rule.required(),
+                            type: "array",
+                            of: [
+                                {
+                                    type: "block",
+                                    marks: {
+                                        annotations: [
+                                            {
+                                                name: "link",
+                                                title: "Link",
+                                                type: "object",
+                                                fields: [
+                                                    {
+                                                        name: "href",
+                                                        title: "URL",
+                                                        type: "url",
+                                                        validation: (Rule) =>
+                                                            Rule.uri({
+                                                                allowRelative: true,
+                                                            }),
+                                                    },
+                                                ],
+                                            },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                    preview: {
+                        select: {
+                            title: "title",
+                            subtitle: "description",
+                        },
+                    },
+                },
+            ],
+        },
     ],
 
     preview: {

@@ -32,16 +32,16 @@ export default function Contact() {
         <>
             <section id="contact" className="sm">
 
+                <MotionElement variant="up" styles="flex flex-col gap-4 items-center">
+                    <h1>
+                        <span className="text-(--gray)">Let’s Work</span>
+                        <br />
+                        Together
+                    </h1>
+                </MotionElement>
+
                 <div className="flex md:flex-row flex-col md:gap-40 gap-24 w-full">
-                    <MotionElement del={0.5} styles="flex flex-col flex-1 gap-16">
-                        <h1 className="text-start">
-                            <span className="text-(--gray)">Let’s Work</span>
-                            <br />
-                            Together
-                        </h1>
-                        <ContactForm styles="w-full" />
-                    </MotionElement>
-                    <MotionElement as="aside" del={0.7} variant="right" styles="flex flex-col h-fit md:max-w-90 w-full gap-6 justify-start">
+                    <MotionElement as="aside" del={0.5} styles="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 h-fit md:max-w-[360px] w-full gap-6">
                         <dl className="flex flex-col gap-6">
                             <SubInfo title="Email" subtitle="wijayadaniel19@gmail.com" />
                             <SubInfo title="Location" subtitle="Jakarta, Indonesia" />
@@ -63,6 +63,10 @@ export default function Contact() {
                                 </li>
                             ))}
                         </ul>
+                    </MotionElement>
+
+                    <MotionElement as="aside" del={0.7} variant="right" styles="flex flex-col flex-1 gap-16">
+                        <ContactForm styles="w-full" />
                     </MotionElement>
                 </div>
             </section>

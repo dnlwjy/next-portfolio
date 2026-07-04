@@ -2,10 +2,9 @@
 
 import { useCallback, useEffect, useRef } from "react"
 import type { ComponentType } from "react"
-import { m } from "framer-motion"
 
 const settings = {
-    maxDistance: 1300, // Max distance for effect activation
+    maxDistance: 2000, // Max distance for effect activation
     intensity: 0.1, // Effect intensity: higher values = stronger effect
     transitionDuration: 1500, // Transition duration in ms
     transitionEase: "cubic-bezier(0.22, 1, 0.36, 1)",
@@ -152,15 +151,9 @@ export const withCursorFollow = <P extends object>(Component: ComponentType<P>):
         }, [])
 
         return (
-            <m.div
-                ref={componentRef}
-                style={{
-                    willChange: "transform",
-                    zIndex: (props as any).zIndex ?? 2, // Default z-index to 2
-                }}
-            >
+            <div ref={componentRef}>
                 <Component {...props} />
-            </m.div>
+            </div>
         )
     }
 }

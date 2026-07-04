@@ -1,6 +1,7 @@
 'use client'
 
 import { m } from "framer-motion";
+import { useMemo } from "react";
 
 interface MotionElementProps {
     children: React.ReactNode;
@@ -24,7 +25,7 @@ const MotionElement = ({
     del = 0.3,
     styles
 }: MotionElementProps) => {
-    const Element = m.create(as);
+    const Element = useMemo(() => m.create(as), [as]);
 
     return (
         <Element

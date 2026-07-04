@@ -38,9 +38,9 @@ const Ava = () => {
 
     return (
         <div ref={ref} className="flex flex-1 items-start justify-center z-0">
-            <div className="aspect-3/4 h-[138%] shrink-0 relative min-w-64">
+            <div className="aspect-3/4 h-[138%] shrink-0 relative min-w-64 overflow-hidden">
                 <FollowVideo opacityValue={opacity} />
-                <div className="absolute -inset-7 bg-[radial-gradient(farthest-side_at_center,transparent_70%,var(--black)_100%)]" />
+                <div className="absolute inset-0 bg-[radial-gradient(farthest-side_at_center,transparent_80%,var(--black)_100%)]" />
                 <m.svg
                     initial={{ opacity: 0, y: 48 }}
                     whileInView={{ opacity: 1, y: 0 }}

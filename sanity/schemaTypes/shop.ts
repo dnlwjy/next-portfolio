@@ -1,5 +1,6 @@
 import { defineType } from "sanity";
 import { orderRankField, orderRankOrdering } from "@sanity/orderable-document-list";
+import { LINK_EXTERNAL_ONLY } from "./about";
 
 export const products = defineType({
   name: "shop",
@@ -28,13 +29,13 @@ export const products = defineType({
       type: "number",
       validation: (Rule) => Rule.required().integer().min(2000).error("Year is required"),
     },
-    { name: "preview", title: "Preview", type: "url", validation: (Rule) => Rule.required().uri({ scheme: ['http', 'https'] }) },
+    { name: "preview", title: "Preview", type: "url", validation: LINK_EXTERNAL_ONLY },
     {
       name: "marketplaceURL",
       title: "Marketplace URL",
       type: "url",
       description: "External link to the product on its marketplace (e.g. Framer, ThemeForest, etc)",
-      validation: (Rule) => Rule.uri({ scheme: ['http', 'https'] }),
+      validation: LINK_EXTERNAL_ONLY,
     },
     {
       name: "marketplaceName",
