@@ -9,6 +9,7 @@ import { listStyles } from '../page'
 import type { Metadata } from "next";
 import { urlFor } from '../../../sanity/lib/image'
 import type { Projects } from '@/types/sanity.types'
+import { SUPPORT } from '../../contact/page'
 
 // 1. queries
 const query = `*[_type == "projects" && slug.current == $slug][0]{
@@ -82,20 +83,18 @@ export default async function CaseStudyDetail({ params }: { params: Promise<{ sl
     const caseStudy = await client.fetch(query, { slug });
     const moreCaseStudies = await client.fetch(moreQuery, { slug });
 
-    if (!caseStudy) {
-        notFound();
-    }
+    if (!caseStudy) notFound()
 
     return (
         <>
-            <section id="case-study-brief" className="sm">
+            <section id="case-study-brief" className="sm pb-0">
 
                 <MotionElement variant="up" styles="flex flex-col gap-4 items-center">
                     <span className="btn-text text-(--gray)">Case Study</span>
                     <h1>{caseStudy.title}</h1>
                 </MotionElement>
 
-                <div className="flex md:flex-row flex-col md:gap-40 gap-24 w-full">
+                <div className={SUPPORT}>
                     <MotionElement as="dl" del={0.5} styles="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 h-fit md:max-w-[360px] w-full gap-6">
                         <SubInfo title="Role" subtitle={caseStudy.role} />
                         <SubInfo title="Client" subtitle={caseStudy.client} />

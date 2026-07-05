@@ -97,23 +97,10 @@ export const about = defineType({
         },
 
         {
-            name: "skills",
-            title: "Skills",
-            type: "object",
-            fields: [
-                {
-                    name: "tools",
-                    title: "Tools",
-                    type: "array",
-                    of: [{ type: "string" }],
-                },
-                {
-                    name: "stacks",
-                    title: "Stacks",
-                    type: "array",
-                    of: [{ type: "string" }],
-                },
-            ],
+            name: "stacks",
+            title: "Stacks",
+            type: "array",
+            of: [{ type: "string" }],
         },
 
         {
@@ -162,10 +149,10 @@ export const about = defineType({
                             title: "Description",
                             type: "text",
                             validation: (Rule) => Rule.required().custom((value) => {
-                                    if (!value || typeof value !== "string") return true;
-                                    const wordCount = value.trim().split(/\s+/).length;
-                                    return wordCount <= 24 || `Description must be 24 words or fewer (currently ${wordCount} words)`;
-                                }),
+                                if (!value || typeof value !== "string") return true;
+                                const wordCount = value.trim().split(/\s+/).length;
+                                return wordCount <= 24 || `Description must be 24 words or fewer (currently ${wordCount} words)`;
+                            }),
                         },
                     ],
                     preview: {
@@ -203,10 +190,10 @@ export const about = defineType({
                             title: "Description",
                             type: "text",
                             validation: (Rule) => Rule.required().custom((value) => {
-                                    if (!value || typeof value !== "string") return true;
-                                    const wordCount = value.trim().split(/\s+/).length;
-                                    return wordCount <= 24 || `Description must be 24 words or fewer (currently ${wordCount} words)`;
-                                }),
+                                if (!value || typeof value !== "string") return true;
+                                const wordCount = value.trim().split(/\s+/).length;
+                                return wordCount <= 24 || `Description must be 24 words or fewer (currently ${wordCount} words)`;
+                            }),
                         },
                     ],
                     preview: {

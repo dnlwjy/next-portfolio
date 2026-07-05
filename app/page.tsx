@@ -101,16 +101,16 @@ export default async function Home() {
 
       {/* About me */}
       <section id="about" className="md:flex-row flex-col max-w-480 md:items-start items-center mt-0 sm:-mt-16 md:mt-0">
-        <MotionElement styles="relative w-full aspect-3/4 min-w-108 max-w-170">
+        <div className="relative w-full aspect-3/4 min-w-108 max-w-170">
           <AboutImage />
-          <div className="absolute z-10 inset-0 bg-[radial-gradient(farthest-side_at_center,#12121200_90%,var(--black)_100%)]" />
+          <div className="absolute z-10 inset-0 bg-[radial-gradient(farthest-side_at_center,#12121200_80%,var(--black)_100%)]" />
           <svg
             className="absolute w-full aspect-square -bottom-16 z-20"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 524 524">
             <path stroke="var(--divider)" d="M0 524 524 0M183.704 373l196-196" />
           </svg>
-        </MotionElement>
+        </div>
 
         <MotionElement
           variant='right'

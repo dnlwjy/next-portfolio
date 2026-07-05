@@ -10,6 +10,7 @@ const socialMedia = [
     { name: "LinkedIn", link: "https://www.linkedin.com/in/dnlwjy/", icon: <LI styles="text-(--gray) hover:text-(--white) transition-colors duration-300" /> },
     { name: "GitHub", link: "https://github.com/dnlwjy", icon: <Github styles="text-(--gray) hover:text-(--white) transition-colors duration-300" /> },
 ]
+export const SUPPORT = "flex md:flex-row flex-col min-[1280px]:gap-40 gap-24 w-full"
 
 // 2. queries
 
@@ -40,9 +41,9 @@ export default function Contact() {
                     </h1>
                 </MotionElement>
 
-                <div className="flex md:flex-row flex-col md:gap-40 gap-24 w-full">
-                    <MotionElement as="aside" del={0.5} styles="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 h-fit md:max-w-[360px] w-full gap-6">
-                        <dl className="flex flex-col gap-6">
+                <div className={SUPPORT}>
+                    <MotionElement as="aside" del={0.5} styles="flex flex-col h-fit md:max-w-90 w-full items-center sm:items-start gap-6 order-2 md:order-1">
+                        <dl className="flex flex-col w-full gap-6">
                             <SubInfo title="Email" subtitle="wijayadaniel19@gmail.com" />
                             <SubInfo title="Location" subtitle="Jakarta, Indonesia" />
                             <SubInfo title="WhatsApp" subtitle="+628111388895" />
@@ -65,7 +66,7 @@ export default function Contact() {
                         </ul>
                     </MotionElement>
 
-                    <MotionElement as="aside" del={0.7} variant="right" styles="flex flex-col flex-1 gap-16">
+                    <MotionElement as="aside" del={0.7} variant="right" styles="flex flex-col flex-1 gap-16 order-1 md:order-2">
                         <ContactForm styles="w-full" />
                     </MotionElement>
                 </div>

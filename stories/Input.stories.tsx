@@ -16,8 +16,6 @@ export const SingleInput = {
         type="text"
         name="name"
         placeholder=""
-        required
-        autoFocus
         aria-label="Full Name"
         aria-required="true"
         autoComplete="name"
@@ -40,7 +38,6 @@ export const AreaInput = {
         id="contact-message"
         name="message"
         placeholder=" "
-        required
         rows={5}
         aria-label="Your message"
         aria-required="true"
