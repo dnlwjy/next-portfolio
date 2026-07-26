@@ -9,12 +9,35 @@ import ToggleTheme from '@/components/ToggleTheme'
 import ThemeProvider from "@/context/ThemeProvider"
 import { client } from '../sanity/lib/client'
 import type { About } from "@/types/sanity.types"
+import Chatbot from "@/components/Chatbot";
 
 // 1. const
 const SITE_NAME = "Daniel Wijaya"
-const SITE_TITLE = `${SITE_NAME} | Frontend Engineer`
+const JOB_TITLE = "Frontend Engineer"
+const SITE_TITLE = `${SITE_NAME} | ${JOB_TITLE}`
 const TEMPLATE = `%s | ${SITE_NAME}`
-const FALLBACK_SITE_DESCRIPTION = "I’m Daniel Wijaya, a Frontend engineer specializing in bridging design and code through user-centered thinking while building scalable and maintainable systems. I live at the intersection of user, business, and backend systems."
+const FALLBACK_SITE_DESCRIPTION = "I’m Daniel Wijaya, a Frontend engineer specializing in bridging design and code through user-centered thinking while building scalable and maintainable systems."
+const SITE_URL = "https://danielwijaya.com"
+const JSONLD = {
+  '@context': 'https://schema.org',
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
+      name: SITE_NAME,
+      url: SITE_URL,
+      jobTitle: JOB_TITLE,
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: SITE_NAME,
+      url: SITE_URL,
+      inLanguage: "en",
+      publisher: { "@id": `${SITE_URL}/#person` },
+    },
+  ],
+};
 
 // 2. queries
 const query = `*[_type == "about" && _id == "about"][0] {
@@ -27,17 +50,29 @@ export async function generateMetadata(): Promise<Metadata> {
     .catch(() => ({ heading: FALLBACK_SITE_DESCRIPTION }))
 
   return {
-    metadataBase: new URL("https://danielwijaya.com"),
+    metadataBase: new URL(SITE_URL),
     title: { default: SITE_TITLE, template: TEMPLATE },
     description: siteDesc?.heading ?? FALLBACK_SITE_DESCRIPTION,
     icons: { icon: "/favicon.png" },
     openGraph: {
       type: "website",
+      url: "/",
       siteName: SITE_NAME,
-      images: ["/og-default.jpg"],
+      title: SITE_TITLE,
+      description: siteDesc?.heading ?? FALLBACK_SITE_DESCRIPTION,
+      images: [
+        {
+          url: "/og-default.jpg",
+          width: 1200,
+          height: 630,
+          alt: SITE_TITLE,
+        }
+      ],
     },
     twitter: {
       card: "summary_large_image",
+      title: SITE_TITLE,
+      description: siteDesc?.heading ?? FALLBACK_SITE_DESCRIPTION,
       images: ["/og-default.jpg"],
     },
   }
@@ -57,6 +92,14 @@ export default async function RootLayout({
         <script dangerouslySetInnerHTML={{
           __html: `try{var t=localStorage.getItem('theme')||'dark';document.documentElement.classList.add(t)}catch(e){}`
         }} />
+
+        {/* Global */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(JSONLD).replace(/</g, '\\u003c'),
+          }}
+        />
       </head>
       <body>
         <ThemeProvider>
@@ -66,6 +109,7 @@ export default async function RootLayout({
             >
               <Header styles="fixed top-6 inset-x-0 mx-auto z-50" />
               <ToggleTheme styles="fixed top-8 right-8 z-50 sm:flex hidden" />
+              <Chatbot styles="fixed lg:bottom-8 lg:right-8 bottom-5 right-5 z-50" />
               <main>
                 {children}
               </main>

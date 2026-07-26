@@ -64,7 +64,7 @@ export default async function About() {
                     </div>
                 </MotionElement>
 
-                <MotionElement variant="up" del={0.5} styles="w-full"><AboutImage /></MotionElement>
+                <MotionElement variant="up" del={0.5} styles="w-full select-none"><AboutImage /></MotionElement>
 
                 <MotionElement variant="up" del={0.5} styles="flex flex-wrap gap-4 sm:gap-5 justify-center w-full max-w-200">
                     {about.stacks?.map((item, i) => (

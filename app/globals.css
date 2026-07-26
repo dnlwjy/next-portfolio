@@ -55,7 +55,7 @@ html {
 }
 body {
   font-family: "inter", sans-serif;
-  @apply bg-(--black) lg:text-[20px] text-[18px] text-(--bodytext) leading-[160%] text-start;
+  @apply bg-(--black) transition-colors duration-500 lg:text-[20px] text-[18px] text-(--bodytext) leading-[160%] text-start;
 }
 main {
   @apply flex flex-col gap-0 items-center w-full overflow-clip;
@@ -87,3 +87,13 @@ input, textarea {
 /* utility styling */
 @utility btn-text { @apply uppercase lg:text-[16px] text-[14px] leading-[120%] tracking-[0.35em] text-(--white); }
 @utility tag { @apply uppercase sm:text-[12px] text-[11px] leading-[150%] text-start tracking-[0.15em] text-(--bodytext); }
+
+/* key frames */
+@keyframes avaFadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+.fade-in-theme-transition {
+  opacity: 0;
+  animation: avaFadeIn 1s cubic-bezier(0.44, 0, 0.56, 1) .5s forwards;
+}

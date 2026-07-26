@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { m, useScroll, useTransform, useSpring, useInView } from "framer-motion"
 import TitleCard from './TitleCard'
 
@@ -49,19 +49,25 @@ const CaseStudySection = ({
 }: CaseStudySectionProps) => {
     const sectionRef = useRef<HTMLDivElement>(null)
     const videoRef = useRef<HTMLVideoElement>(null)
+    const [safari, setSafari] = useState<boolean | null>(null)
     const visible = useInView(videoRef, { amount: 0 })
-    const videoSrc = isSafariBrowser() ? videoMov : videoWebm
+
+    useEffect(() => {
+        setSafari(isSafariBrowser())
+    }, [])
+
+    const videoSrc = safari === null ? undefined : safari ? videoMov : videoWebm
 
     // Track if video has played at least once
     useEffect(() => {
         const video = videoRef.current;
-        if (!video) return;
+        if (!video || !videoSrc) return;
         if (visible) {
-            video.play().catch(() => {});
+            video.play().catch(() => { });
         } else {
             video.pause();
         }
-    }, [visible]);
+    }, [visible, videoSrc]);
 
     // Custom loop: after first play, start from loopStart seconds
     useEffect(() => {

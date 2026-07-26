@@ -44,12 +44,12 @@ export default async function Home() {
 
       {/* Hero Section */}
       <section id="hero" className="h-screen p-4">
-        <div className="max-h-225 flex flex-col flex-1 py-0 h-[85%] relative">
+        <div className="max-h-225 flex flex-col flex-1 py-0 h-[87%] relative">
 
           <Ava />
 
           <MotionElement
-            del={0.5}
+            del={0.7}
             variant="up"
             styles="flex flex-col gap-12 items-center z-10">
             <h1>
@@ -103,7 +103,6 @@ export default async function Home() {
       <section id="about" className="md:flex-row flex-col max-w-480 md:items-start items-center mt-0 sm:-mt-16 md:mt-0">
         <div className="relative w-full aspect-3/4 min-w-108 max-w-170">
           <AboutImage />
-          <div className="absolute z-10 inset-0 bg-[radial-gradient(farthest-side_at_center,#12121200_80%,var(--black)_100%)]" />
           <svg
             className="absolute w-full aspect-square -bottom-16 z-20"
             xmlns="http://www.w3.org/2000/svg"

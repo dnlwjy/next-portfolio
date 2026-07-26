@@ -12,6 +12,7 @@ import {
   Spotify,
   Search,
   Close,
+  Chat,
 } from "../components/IconLibrary";
 
 const meta: Meta = {
@@ -32,6 +33,7 @@ const icons = [
   Spotify,
   Search,
   Close,
+  Chat,
 ];
 
 export const AllIcons = {

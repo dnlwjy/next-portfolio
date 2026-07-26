@@ -11,10 +11,17 @@ import { urlFor } from '../../../sanity/lib/image'
 import type { Projects } from '@/types/sanity.types'
 import { SUPPORT } from '../../contact/page'
 
-// 1. queries
+// 1. const
+const SITE_URL = "https://danielwijaya.com"
+
+// 2. queries
 const query = `*[_type == "projects" && slug.current == $slug][0]{
     _id,
+    _createdAt,
+    _updatedAt,
     title,
+    description,
+    coverImage,
     role,
     client,
     year,
@@ -30,13 +37,13 @@ const moreQuery = `*[_type == "projects" && slug.current != $slug]{
     slug,
 }`
 
-// 2. slug
+// 3. slug
 export async function generateStaticParams() {
     const slugs: string[] = await client.fetch(`*[_type == "projects"].slug.current`)
     return slugs.map((slug) => ({ slug }))
 }
 
-// 3. metadata
+// 4. metadata
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params
     const data = await client.fetch(`*[_type == "projects" && slug.current == $slug][0]{
@@ -77,7 +84,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     }
 }
 
-// 4. render
+// 5. render
 export default async function CaseStudyDetail({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
     const caseStudy = await client.fetch(query, { slug });
@@ -85,8 +92,67 @@ export default async function CaseStudyDetail({ params }: { params: Promise<{ sl
 
     if (!caseStudy) notFound()
 
+    // 6. const JSON-LD
+    const image = caseStudy.coverImage
+        ? urlFor(caseStudy.coverImage).width(1200).height(630).url()
+        : `${SITE_URL}/og-default.jpg`
+
+    const JSONLD = {
+        '@context': 'https://schema.org',
+        '@type': 'TechArticle',
+        '@id': `${SITE_URL}/case-study/${slug}#techarticle`,
+        headline: caseStudy.title,
+        description: caseStudy.description,
+        image,
+        url: `${SITE_URL}/case-study/${slug}`,
+        datePublished: caseStudy._createdAt,
+        dateModified: caseStudy._updatedAt,
+        author: { '@id': `${SITE_URL}/#person` },
+    }
+
+    const BREADCRUMB_JSONLD = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: SITE_URL,
+            },
+            {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Case Study',
+                item: `${SITE_URL}/case-study`,
+            },
+            {
+                '@type': 'ListItem',
+                position: 3,
+                name: caseStudy.title,
+                item: `${SITE_URL}/case-study/${slug}`,
+            },
+        ],
+    }
+
     return (
         <>
+            {/* Case Study */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(JSONLD).replace(/</g, '\\u003c'),
+                }}
+            />
+
+            {/* Breadcrumb */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(BREADCRUMB_JSONLD).replace(/</g, '\\u003c'),
+                }}
+            />
+
             <section id="case-study-brief" className="sm pb-0">
 
                 <MotionElement variant="up" styles="flex flex-col gap-4 items-center">

@@ -172,7 +172,7 @@ const ContactForm = ({ styles = "" }: { styles?: string }) => {
             ) : null}
             <Button
                 title={logicSubmitButton(status)}
-                additionalHoverLogic={status === "sending" || status === "success"}
+                afterClickedLogic={status === "sending" || status === "success"}
                 type="submit"
                 disabled={status === 'sending' || status === 'success'}
                 styles={`

@@ -8,8 +8,7 @@ type IconType = React.ElementType<IconProps>
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     title?: string,
     variant?: keyof typeof variantButton,
-    // for submit button in ContactForm, to keep the hover effect on hold while sending or after success
-    additionalHoverLogic?: boolean,
+    afterClickedLogic?: boolean,
     click?: () => void,
     icon?: IconType,
     styles?: string,
@@ -33,7 +32,7 @@ const variantButton = {
 const Button = ({
     title,
     variant = "primary",
-    additionalHoverLogic,
+    afterClickedLogic,
     click,
     icon: Icon,
     styles,
@@ -47,11 +46,11 @@ const Button = ({
             onMouseEnter={() => setButtonHover(true)}
             onMouseLeave={() => setButtonHover(false)}
             className={`
-                    relative flex  items-center justify-center ${title ? 'gap-3 px-8 h-12' : ''} ${styles}
+                    relative flex items-center justify-center ${title ? 'gap-3 px-8 h-12' : ''} ${styles}
                     ${variantButton[variant].base} ${variant === "disabled" ? "cursor-not-allowed" : "cursor-pointer"}
                     [clip-path:polygon(0_0,100%_0,100%_calc(100%-12px),calc(100%-12px)_100%,0_100%)]`}
         >
-            <span className={`absolute bottom-0 right-0 ${variantButton[variant].hover} ${buttonHover || additionalHoverLogic ? "w-full h-full rounded-none" : "w-0 h-0 rounded-[100px] rounded-br-none"} transition-all duration-600 ease-in-out`} />
+            <span className={`absolute bottom-0 right-0 ${variantButton[variant].hover} ${buttonHover || afterClickedLogic ? "w-full h-full rounded-none" : "w-0 h-0 rounded-[100px] rounded-br-none"} transition-all duration-600 ease-in-out`} />
 
             {Icon && <Icon size={20} styles={`text-white mix-blend-difference ${variant === "disabled" ? "opacity-30" : ""}`} />}
             <span className={`btn-text text-white mix-blend-difference ${variant === "disabled" ? "opacity-50" : ""}`}>{title}</span>

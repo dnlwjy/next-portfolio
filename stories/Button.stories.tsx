@@ -63,7 +63,7 @@ export const EventTrigger = {
         <Button
           title={active ? args.activeTitle : args.defaultTitle}
           variant="primary"
-          additionalHoverLogic={active}
+          afterClickedLogic={active}
           click={() => setActive((v) => !v)}
           styles="w-[216px]"
         />
